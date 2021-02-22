@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gatsby on Pivotree Cloud Technology Blog - POC</title>
+    <link>https://blog.pivotree.cloud/tags/gatsby/</link>
+    <description>Recent content in Gatsby on Pivotree Cloud Technology Blog - POC</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 24 Nov 2020 13:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.pivotree.cloud/tags/gatsby/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Documentation with Auth0 and Gatsby</title>
+      <link>https://blog.pivotree.cloud/2020-11-24-documentation-gatsby/</link>
+      <pubDate>Tue, 24 Nov 2020 13:00:00 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/2020-11-24-documentation-gatsby/</guid>
+      <description>Background With modern technologies and available Frameworks, we have successfully eliminated the complexities involved in building an end to end Application and have eased the entire development and deployment process to a great extent. As we finish writing the Application and our next goal is to publish it as an open source project or push it to production, a major component that will make the code more appealing and useful is having a proper documentation about the nitty-gritty involved in the development process.</description>
+    </item>
+    
+  </channel>
+</rss>

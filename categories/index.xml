@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Pivotree Cloud Technology Blog - POC</title>
+    <link>https://blog.pivotree.cloud/categories/</link>
+    <description>Recent content in Categories on Pivotree Cloud Technology Blog - POC</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 18 Feb 2021 13:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.pivotree.cloud/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>DevOps</title>
+      <link>https://blog.pivotree.cloud/categories/devops/</link>
+      <pubDate>Thu, 18 Feb 2021 13:00:00 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/categories/devops/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>HowTo</title>
+      <link>https://blog.pivotree.cloud/categories/howto/</link>
+      <pubDate>Thu, 18 Feb 2021 13:00:00 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/categories/howto/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Version Control</title>
+      <link>https://blog.pivotree.cloud/categories/version-control/</link>
+      <pubDate>Thu, 18 Feb 2021 13:00:00 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/categories/version-control/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Best Practices</title>
+      <link>https://blog.pivotree.cloud/categories/best-practices/</link>
+      <pubDate>Tue, 24 Nov 2020 13:00:00 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/categories/best-practices/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Documentation</title>
+      <link>https://blog.pivotree.cloud/categories/documentation/</link>
+      <pubDate>Tue, 24 Nov 2020 13:00:00 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/categories/documentation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Architecture</title>
+      <link>https://blog.pivotree.cloud/categories/architecture/</link>
+      <pubDate>Mon, 10 Aug 2020 13:00:00 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/categories/architecture/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Oracle Commerce</title>
+      <link>https://blog.pivotree.cloud/categories/oracle-commerce/</link>
+      <pubDate>Fri, 10 Jul 2020 13:00:00 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/categories/oracle-commerce/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>events</title>
+      <link>https://blog.pivotree.cloud/categories/events/</link>
+      <pubDate>Sat, 30 May 2020 11:22:48 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/categories/events/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

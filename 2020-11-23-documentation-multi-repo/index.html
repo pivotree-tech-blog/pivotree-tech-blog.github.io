@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Documenting multi-repository projects</title>
+		<link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.pivotree.cloud/index.xml">
+		<link rel="canonical" href="https://blog.pivotree.cloud/2020-11-23-documentation-multi-repo/">
+		
+		<link rel="shortcut icon" type="image/png" href="https://blog.pivotree.cloud/apple-touch-icon-precomposed.png">
+		<meta name="description" content="Documentation best practices, tools and techniquest for cloud-native multi-repository projects">
+		
+		<meta name="generator" content="Hugo 0.68.3" />
+
+		
+		<meta property="og:title" content="Documenting multi-repository projects" />
+		<meta property="og:type" content="article" />
+		<meta property="og:image" content="https://blog.pivotree.cloud/img/griffin-keller--mNvCsNlsSE-unsplash2.jpg" />
+		<meta property="og:description" content="Documentation best practices, tools and techniquest for cloud-native multi-repository projects" />
+		<meta property="og:url" content="https://blog.pivotree.cloud/2020-11-23-documentation-multi-repo/" />
+		<meta property="og:site_name" content="Documenting multi-repository projects" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@TeamPivotree" />
+
+
+		
+		<link rel="stylesheet" href="https://blog.pivotree.cloud/css/tachyons.min.css" />
+		<link rel="stylesheet" href="https://blog.pivotree.cloud/css/story.css" />
+		<link rel="stylesheet" href="https://blog.pivotree.cloud/css/descartes.css" />
+		
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+		<link href="https://fonts.googleapis.com/css?family=Quattrocento+Sans:400,400i,700,700i|Quattrocento:400,700|Spectral:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
+		
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		
+		<script src="https://blog.pivotree.cloud/js/story.js"></script>
+
+	</head>
+	<body class="ma0 bg-white  page-kind-page is-page-true ">
+		
+		<header class="cover bg-top" style="background-image: url('https://blog.pivotree.cloud/img/griffin-keller--mNvCsNlsSE-unsplash2.jpg'); background-position: center;">
+			<div class="bg-black-30 bb bt">
+
+				<nav class="hide-print sans-serif  border-box pa3 ph5-l">
+					<a href="https://blog.pivotree.cloud/" title="Home">
+						<img src="https://blog.pivotree.cloud/img/logo.jpg" class="w2 h2 br-100" alt="Pivotree Cloud Technology Blog - POC" />
+					</a>
+					<div class="fr h2 pv2 tr">
+						<a class="link f5 ml2 dim near-white" href="/archives/">Archives</a>
+						<a class="link f5 ml2 dim near-white" href="/slides/">Slides</a>
+						<a class="link f5 ml2 dim near-white" href="/talks/">Talks</a>
+						<a class="link f5 ml2 dim near-white" href="https://github.com/thinkwrap"><i class="fab fa-github-square"></i></a>
+						<a class="link f5 ml2 dim near-white fas fa-rss-square" href="https://blog.pivotree.cloud/index.xml" title="RSS Feed"></a>
+						<a class="link f5 ml2 dim near-white fas fa-search" href="https://blog.pivotree.cloud/search/" role="search" title="Search"></a>
+					</div>
+				</nav>
+
+				<div id="hdr" class="tc-l pv4-ns pv5-l pv2 ph3 ph4-ns">
+					<h1 class="near-white mt1-ns f2 fw3 mb0 mt0 lh-title">Documenting multi-repository projects</h1>
+					<h2 class="near-white mt3-l mb4-l fw1 f6 f3-l measure-wide-l center lh-copy mt2 mb3">
+						
+						
+							
+								Published
+								<time datetime="2020-11-23T13:00:00&#43;08:00">Nov 23, 2020</time>
+								<span class="display-print">by Miro Adamy</span>
+								 in <a href="https://blog.pivotree.cloud/categories/devops" class="no-underline category near-white dim">DevOps</a>, <a href="https://blog.pivotree.cloud/categories/documentation" class="no-underline category near-white dim">Documentation</a>, <a href="https://blog.pivotree.cloud/categories/best-practices" class="no-underline category near-white dim">Best Practices</a>
+								<span class="display-print">at https://blog.pivotree.cloud/2020-11-23-documentation-multi-repo/</span>
+							
+						
+					</h2>
+				</div>
+
+				
+				
+				
+				
+
+			</div>
+		</header>
+		
+		<main role="main">
+		
+<article class="center bg-white br-3 pv1 ph4 lh-copy f5 nested-links mw7">
+	<p>This blog post is a de-powerpointized version of a brownbag session in Pivotree. The goal
+was to increase awareness of tools and techniques for information / knowledge capture in the projects, specifically focusing on producing quality documentation so that everybody in project can access it and contribute to it,
+not only developers. We wanted to look at the tools that would allow engineers keep using their tools of trade
+(without impact on developer’s productivity) and at the same time make the information available without
+duplication of work to increase re-findability of information.</p>
+<p>We are introducing standards, tools and best practices for documentation and suggesting workflow that can
+simplify and streamline the process of creating a documentation and keeping it up to date.</p>
+<h2 id="why-documentation-is-important">Why documentation is important</h2>
+<p>In commercial environment, quality (and often existence) of documentation is important factor in determining
+what will be the cost of maintaining the codebase.</p>
+<p>Whether or not the documentation is available / complete / up-to-date can greatly impact:</p>
+<ul>
+<li>whether the code will be correctly used</li>
+<li>how fast it will be available for reuse / modification</li>
+<li>how efficient / dynamic will onboarding / transfer of people within the team work</li>
+</ul>
+<p>In OpenSource world quality and comprehensiveness of documentation is a matter of project survival. With all other things (code quality, functionality, community size etc) comparable or equal, the project that
+makes it easier to understand the code, has more examples and helps make the learning curve less steep, will have better adoption rate and much greater chance to attract the contributors and users. In the end, this will decide whether the project will live and prosper or gets abandoned.</p>
+<p>There is another aspect. While documenting a system: we give it another look and create an &ldquo;internal checkpoint&rdquo; that helps to answer questions like:</p>
+<ul>
+<li>Is it really complete ?</li>
+<li>What is missing ?</li>
+<li>Are edge cases covered ?</li>
+<li>Does it do what it should do ?</li>
+</ul>
+<p>This can have a great impact on the development of a project and should be an ongoing process, not left for “afterwards” when the coding is done.</p>
+<p>Writing documentation is explaining the code to unknown audience. One can consider it an instance of a “Rubber Duck debugging” session without any particular problem on the table. It is very useful exercises and quite often it makes visible overlooked scenarios and generally improves quality of code by the simple process of giving it another look from a different angle, wearing a different hat than coders do.</p>
+<h2 id="what-makes-a-documentation-good-andor-useful">What makes a documentation good and/or useful</h2>
+<p>The criteria for good documentation we aim for is a documentation that:</p>
+<ul>
+<li>is up-to date</li>
+<li>is accessible to the proper audience (all project stakeholders)</li>
+<li>is it easy to extend / modify</li>
+<li>has its lifecycle defined and tied to project lifecycle</li>
+<li>is it easy to find: has high degree of re-findability</li>
+</ul>
+<h2 id="code-vs-documentation-what-we-document">Code vs Documentation: what we document</h2>
+<p>Documentation contains parts with different degrees of closeness to a project code.</p>
+<p>At the closest end, there is documentation that lives inside the source code files. This type of documentation is
+focusing on details such as explaining purpose and functionality of functions, parameters, explanation of the details. It is crucial in the &ldquo;forensic&rdquo; / maintenance situation - debugging the code and searching for an answer to the question &ldquo;why does this not work&rdquo; ?</p>
+<p>While this type of documentation is extremely useful and important, we cannot limit our focus at this level. The problem here is that at this level of detail the documentation is rather hard to read: it is not clear where to start, where to go next - it does not tell a story and it&rsquo;s structure is dictated by physical code structure.</p>
+<p>This is where additional, higher level description comes into play: system description, explanation how does the subsystem / whole system work, what is a module architecture, what are interfaces between modules, subsystems.</p>
+<p>This type of documentation covers information outside of scope of a single source file, but is still source code related. It includes examples of APIs, examples of proper use of the code. It should represent a logical view, that is different from the code structure.</p>
+<p>At the highest level of abstraction from the code we have documentation of architecture and project design, user documentation, installation and project lifecycle documentation.</p>
+<p>All this type of documentation needs to be represented / written in some form and exist is some place. Quite often, the different levels of documentation can be found in different places using different tools. I am trying to show why this is not the best approach and present tools and workflows that allow documentation and code coexit in the same place.</p>
+<h2 id="where-does-your-documentation-live">Where does your documentation live</h2>
+<p>There are two places where documentation can live:</p>
+<ul>
+<li>in the same source code repository as the code</li>
+<li>somewhere else</li>
+</ul>
+<p>There are several advantages of using the same repository as the source code:</p>
+<p>First, it is the audience - big part of the documentation is written by (current) developers for (future) developers. This way it can be managed together, using code version friendly tools. In order to do that, we need to use code version friendly formats - text based formats.</p>
+<p>Second - using the same repository synchronizes release cycles of the documentation. It is much easier to update the CHANGELOG.md when it is right there and to make it part of the next commit than to remember to go to some Wiki and do it there. How many similar lines as the following one have you seen during your career ?</p>
+<pre><code>... SOME CODE
+
+# TODO: Update the Release Notes in the Wiki - URL
+
+... more code
+
+</code></pre><p>Which gets us to second location for the documentation: somewhere else - meaning &ldquo;separate from the code&rdquo;.</p>
+<p>Elsewhere can include places like &ldquo;in a Wiki&rdquo; - which is not great to really unhappy places such as Word documents on a file share.</p>
+<p>There are many issues with this approach: by going elsewhere for the documentation, we need to use separate credentials, loose the direct link to code. Some part of documentation (source code comments) still stays with the source, but other parts - the higher level - are now elsewhere. The &ldquo;one source of truth&rdquo; is lost and often documentation in Wiki contains different information than the actual code.</p>
+<p>With &ldquo;elsewhere&rdquo; we get inherently different release cycles for project code and documentation: updating the documentation is decoupled from code changes and project releases which impacts the &ldquo;up-to-dateness&rdquo; of the information. It also makes the automation and CI/CD much more complicated.</p>
+<p>We also get different search scopes: to find something, two searches are necessary - one over the source code and one over the documentation place.</p>
+<p>As the information related to code lives in two places, we will not have a single source of truth: if there is an overlap and the one place does not agree with the other, there is a risk of using the wrong one. Transfer of information between two locations leads to unnecessary work.</p>
+<p>Note: with all the issues mentioned above, Wiki at least has a built-in mechanism of versioning and diff capability with change tracking and prevention of information loss / overwriting. A much worse situation is using separate word documents on file share - the binary format makes content comparison more complicated and file share is susceptible to overwrite / information loss.
+Where Wiki falls short is that it is &ldquo;single threaded&rdquo; - there is a single sequence of changes (albeit made by different contributors). In the code world, the typical situation is that we have multiple active branches representing (at minimum) current - deployed application, bug-fix branch (small changes with short release cycle) and future</p>
+<p>With all that said, we can ask what is the main motivation of using the Wiki as a separate documentation store ? It is usually easy to edit (web interface with some form of WYSIWYG) and formatting capabilities of the Wiki compared to plain text inside the source code repository (headers, bullet points, tables, embedded pictures, links etc). An idea of accessing text based file in a Git repository and the developer&rsquo;s prefered tool chain (that is command line oriented and quite technical) may seem at a first glance to be to complicated for non-developer members of the team: project managers, business analysts, product managers / stake owners.</p>
+<p>In the next part we will show that if a proper format for a documentation file is selected, we can address both of these concerns without leaving the realm of the single source code repository. Let&rsquo;s have a look at available documentation formats from a maintainability point of view and see how these can impact the user experience for content contributors.</p>
+<h2 id="formats---from-maintainability-pov">Formats - from maintainability POV</h2>
+<p>What makes document format &ldquo;good&rdquo; from maintainability perspective is that it must be simple and text based.</p>
+<p>Similar to source code files.</p>
+<p>This allows easy diff creation and versioning and most importantly, easy merging when different versions of code (and documentation) are being worked on in parallel.</p>
+<p>Unfortunately, pure text is not visually appealing and lacks lots of features such as a standard way to embed images and structure parts of text (such as heading). There is a text based format that has all these features and more but it is very impractical for manual editing - the HTML.</p>
+<p>The middle ground between plain text and full presentation capable HTML is markup - a standard of formatting plain text file so that it can be easily transformed into HTML representation. Even better, all major source control platforms - Github, Bitbucket and Gitlab - support rendering the markdown files as nicely formatted HTML with headers, links, tables and embedded pictures while allowing editing the source form of the file in the browser. The word &ldquo;markup&rdquo; indicates how it works: there are special, designated characters or words that indicates the formatting or structure of a piece of text - e.g. indicating header, table or embedded image - it marks it up for presentation.</p>
+<p>The result is good looking, easy to version and easy to edit documentation files.</p>
+<p>Considerably worse choice from maintainability point of view are binary proprietary formats - e.g. most famous one would be Word. They are either binary (doc), but even if not, the internal XML based format is not suitable for neither comparing nor editing without proprietary tools. Using the open source alternatives does not help - they pose the same problem and the fact that one does not have a commercial license to use them does not help either.</p>
+<p>Absolutely worst format from maintainability point of view are systems storing the documentation in a database, which essentially turns a document into a proprietary blob and then hides it inside a much bigger proprietary blog, accessible only through a dedicated proprietary interface.</p>
+<p>So the best bet is selecting a markup format that is simple enough to be easy to learn for non-technical users, expressive enough to produce great looking rendered documentation and with tool support allowing in-place editing on Github/Bitbucket, tools for advanced user as well as support for automation of documentation rendering.
+The rendering does not necessarily need to be only HTML - many markup toolchains can produce PDF or ebook format such as ePub. These will be the criteria we will use to select best markup format for our use case</p>
+<h2 id="markup-formats-parade">Markup formats parade</h2>
+<p>At the end of 2020, we can safely say that the big 3 worth looking at are:</p>
+<ul>
+<li>Markdown</li>
+<li>AsciiDoc</li>
+<li>RestructuredText</li>
+</ul>
+<p>with LaTex as honorable mention.</p>
+<p>We were quite considering it seriously because even if technically it is a markup, but it&rsquo;s capabilities and complexity is in a different league. It shines for creating scientific articles with complex mathematical formulas and beautiful exact typography and the whole toolchain is targeting a very different audience and use cases.</p>
+<p>Here are few examples that can be a small peek into how powerful (and complex) LaTex markup is:</p>
+<p>Side-by-side source/rendered:</p>
+<p><img src="/img/markup/latex.png" alt=""></p>
+<p>A snippet of the source
+<img src="/img/markup/latex2.png" alt=""></p>
+<p>.. that renders this result
+<img src="/img/markup/latex3.png" alt=""></p>
+<h3 id="markdown">Markdown</h3>
+<p>Markdown is by far the most popular markup format in use. It is also the simplest / easiest to use from the big 3.
+It has widest tooling support - most IDEs and major editors support preview mode (e.g. Visual Studio Code, PyCharm, Atom) - either OOTB or via plugins. Not surprisingly, there are lots of generators that take one or more markdown files and produce good looking web pages or web sites. It is well supported by CI/CD pipelines and most use cases is focused on producing HTML output</p>
+<p>Among disadvantages of Markdown is lack of standardization - there are dialects and supported features in different toolchains may differ. One of the dialects seems to be approaching &lsquo;standard&rsquo; status - GFM also known as Github Flavored Markdown, which together with &lsquo;Material theme&rsquo; enjoys great popularity among users.
+The second disadvantage is being less expressive / less powerful than the others - a consequence of being simpler</p>
+<p>Few pointers</p>
+<ul>
+<li><a href="https://markdown-it.github.io/">https://markdown-it.github.io/</a></li>
+<li><a href="https://www.markdownguide.org/cheat-sheet/">https://www.markdownguide.org/cheat-sheet/</a></li>
+<li><a href="https://guides.github.com/features/mastering-markdown/">https://guides.github.com/features/mastering-markdown/</a></li>
+</ul>
+<h3 id="asciidoc">AsciiDoc</h3>
+<p>AsciiDoc (<a href="https://asciidoc.org/">https://asciidoc.org/</a>) is format used by toolchains that many book authors use to author and produce eBooks and printed - OReilly among the most notable ones see (documentation on Atlas)[https://docs.atlas.oreilly.com/writing_in_asciidoc.html]. AsciiDoc has many features well suited for larger projects - e.g. support for glossaries, which is no surprise as it started as a markup lightweight alternative to DocBook - XML based format for book authoring.</p>
+<p>The best known tool for AsciiDoc is AsciiDoctor - check its functionality and some more details on differences between AsciiDoc and Markdown  <a href="https://asciidoctor.org/docs/asciidoc-vs-markdown/">here</a>, <a href="http://work.haufegroup.io/documentation-as-code/">and here</a>. The second link shows few of the &ldquo;killer features&rdquo; of AsciiDoc for code documentation</p>
+<ul>
+<li>e.g. annotation of the code snippet rendered as numbered callouts:</li>
+</ul>
+<p><img src="/img/markup/asciidoc-1.png" alt=""></p>
+<p>or treatment of the tables:</p>
+<p><img src="/img/markup/asciidoc-2.png" alt=""></p>
+<h3 id="restructuredtext">RestructuredText</h3>
+<p>The last of the big three is coming from and is focused on Python and programming languages documentation. It has excellent capabilities to combine documentation extracted from source files - (in Python world &ldquo;docstrings&rdquo;) with the text only files into a coherent, larger body of information. It was originally created as the format for Docutils documents and it&rsquo;s initial release dates back to 2002 - so it is older than Markdown.</p>
+<p>It&rsquo;s superpowers are in the area of inweaving the code and the text, with extracts from the source files. It is very easy to include partial content of the source code directly into the text, create a table of content or well defined extensibility. It&rsquo;s &ldquo;native&rdquo; toolchain is called <a href="https://www.sphinx-doc.org/">Sphinx</a> and it&rsquo;s showcase is <a href="https://readthedocs.org/">ReadTheDocs</a> - documentation hosting site based on Sphinx but also supports Markdown. Another good example of RestructuredText capabilities is <a href="https://docs.anaconda.com/restructuredtext/detailed/">anaconda documentation</a> or <a href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html">sphinx documentation</a></p>
+<p>Restructured text is more complex and unfortunately more fragile than the previous two formats. It is quite easy to write invalid markup and I have personally run several times into weird formatting issues (unlike with Markdown or AsciiDoc). After using it for over 1 years for personal projects I gave up and switched to Markdown - and <a href="https://jaceklaskowski.medium.com/giving-up-on-read-the-docs-restructuredtext-and-sphinx-674961804641">I was not alone</a> that ended up doing so.</p>
+<p>It is also least popular and mostly unknown outside of the Python community.</p>
+<p>Here is <a href="https://hyperpolyglot.org/lightweight-markup">side by side comparison</a> of the syntax similarities and differences between these formats.</p>
+<h3 id="-and-the-winner-is">&hellip; and the winner is:</h3>
+<p>Markdown. The ease of use, simplicity, wide toolchain support and being the &ldquo;native&rdquo; markup for all three Git hosting sites (which we all use for different sides of the business).</p>
+<p>As for toolchain, we have selected two options: MkDocs with Material Theme and Gatsby.</p>
+<h2 id="authoring---as-easy-as-wiki">Authoring - as easy as Wiki</h2>
+<p>The way you write the documentation using Markdown, depends on what kind of role you play in the projects. For developers, the great news is that you keep using whatever tools you are happy with: any major editor (Visual Studio Code, Atom, Sublime Text, vim, emacs, Notepad++ - etc) supoort Markdown, in many cases including the preview functionality - either directly of through plugins. The documentation is simply a set of files living under the <code>./docs</code> folder in your repository.</p>
+<p>If you are not a developer and do not really know all the details regarding git, cloning, branches and pull requests, no worries: there is a Wiki-like way to contribute and document everything.</p>
+<p>First get access to the repository on Github, Bitbucket or Gitlab - whatever your project uses. Then simply find the file in the repository and open it.</p>
+<p><img src="/img/markup/web1.png" alt=""></p>
+<p>You will notice that it renders as a nice formatted web page (this is the preview mode).</p>
+<p><img src="/img/markup/web2.png" alt=""></p>
+<p>In order to change the file, you need to switch to Edit mode.</p>
+<p><img src="/img/markup/web3.png" alt=""></p>
+<p>The browser now offers you a &ldquo;source&rdquo; version of the file in Markdown.</p>
+<p><img src="/img/markup/web4.png" alt=""></p>
+<p>Make the changes you want and save the changes by making commit. There are two ways to save: either by simply adding the new version of the file to the repository history or by creating a <code>pull request</code> - a separate area where you change will be kept, allowing somebody to review it and merge it with the rest of the changes other developers may be doing.</p>
+<p><img src="/img/markup/web5.png" alt=""></p>
+<p>If you are new to this, here are some pointers:</p>
+<ul>
+<li><a href="https://www.atlassian.com/git/tutorials/source-code-management">https://www.atlassian.com/git/tutorials/source-code-management</a></li>
+<li><a href="https://bitbucket.org/blog/edit-your-code-in-the-cloud-with-bitbucket">https://bitbucket.org/blog/edit-your-code-in-the-cloud-with-bitbucket</a></li>
+<li><a href="https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/about-pull-requests">https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/about-pull-requests</a></li>
+<li><a href="https://docs.gitlab.com/ee/topics/gitlab_flow.html">https://docs.gitlab.com/ee/topics/gitlab_flow.html</a></li>
+</ul>
+<p>The <em>main</em> point here is that from a content creator experience point of view, this gives you very similar tools as Wiki without disadvantage of working on a separate system, away from development workflow. Your documentation will become an integral part of the development flow and will not drift or diverge because the documentation writers are separated from the codebase and unaware of the latest changes.</p>
+<h2 id="organization-of-the-doc-and-code-mkdocs">Organization of the Doc and Code: MkDocs</h2>
+<p>The above flows - Web based or developer oriented - were addressing the process of working with a single file. Most project will have many documentation files. They are useful on their own, but there is a simple way to define a navigational menu and turn them to dynamically generated web site with left side navigation bar and right-side file structure preview. This is what <a href="">MkDocs</a> does for us.</p>
+<p>To make repository work with MkDocs, two things are necessary:</p>
+<ul>
+<li>put the Markdown files under <code>./docs</code> folder</li>
+<li>add file <code>mkdocs.yml</code> to the root of the project that defines configuration of the documentation</li>
+</ul>
+<p>Here is an example of a config file</p>
+<pre><code>site_name: Reference Architecture for $PRODUCTNAME
+repo_url: https://bitbucket.org/pivotree/$PRODUCTNAME-ref-arch/src/master/
+repo_name: $PRODUCTNAME-ref-arch
+site_description: $PRODUCTNAME Reference Architecture - Infrastructure Documentation
+site_author: miro.adamy@pivotree.com
+copyright: (c) 2020 Pivotree - https://pivotree.com/
+
+nav:
+    - Home: index.md
+    - Environments:
+        - Staging: STAG.md
+        - Production: PROD.md
+        - Dev/QA: DEV.md
+    - Modules:
+        - Module 1: module-demo-1.md
+        - Module 2: module-demo-2.md
+    - Examples:
+        - Minimal: example-minimal.md
+        - Typical: example-typical.md
+        - Everything: example-everything.md
+    - About this Documentation:
+        - Intro to MkDocs: mkdocs/about.md
+        - Markdown Demo: mkdocs/markdown-demo.md
+        - Macros Demo: mkdocs/macros-demo1.md
+#        - Diagrams: plantuml/diagrams.md
+theme:
+    name: material
+
+markdown_extensions:
+    - admonition
+    - codehilite
+    - footnotes
+    - meta
+    - toc:
+        permalink: True
+    - sane_lists
+    - pymdownx.arithmatex
+    - pymdownx.emoji:
+        emoji_index: !!python/name:materialx.emoji.twemoji
+        emoji_generator: !!python/name:materialx.emoji.to_svg
+    - pymdownx.superfences
+    - pymdownx.tasklist:
+        custom_checkbox: true
+    - pymdownx.tabbed
+    - pymdownx.tilde
+    - pymdownx.magiclink
+    - pymdownx.details
+
+
+plugins:
+    - search
+    - macros:
+        include_dir: .
+
+extra:
+    price: 12.50
+    company:
+        name: Pivotree
+        address: March 450
+        website: https://pivotree.com/
+</code></pre><p>It contains 5 parts:</p>
+<ul>
+<li>header - name of the site</li>
+<li>navigational structure - which files create site and how</li>
+<li>theme</li>
+<li>markdown extensions</li>
+<li>plugins (note the include_dir directive)</li>
+<li>extra data (can be used in parameters)</li>
+</ul>
+<p>Here is the source code organization:</p>
+<p><img src="/img/markup/struct1.png" alt=""></p>
+<h3 id="navigation-src--rendered">Navigation: SRC =&gt; Rendered</h3>
+<p>The generated site takes the navigation part of <code>mkdocs.yml</code>:</p>
+<p><img src="/img/markup/struct2.png" alt=""></p>
+<p>and renders a dynamic menu out of it.</p>
+<p>The whole layout of the site is defined by the navigation and the used theme. It is <a href="https://squidfunk.github.io/mkdocs-material/">material theme</a> for MkDocs that works in the background and renders the 3-column view with navigation on the left, content in the middle and structure of currently displayed document in the right column</p>
+<p><img src="/img/markup/struct4.png" alt=""></p>
+<h2 id="documentation-generation-and-hosting">Documentation Generation and Hosting</h2>
+<p>The process of transformation of the Markdown files to a website can be fully automated using CI/CD pipelines in each of the major hosting sites. The best support (IMHO) has Gitlab where this is an OOTB feature:</p>
+<p>This is .gitlab-ci.yml that generates HTML sites accessible as Gitlab Pages attached to the repository. The great advantage of Gitlab is support for private Gitlab pages for private repositories, which simplify setup for authentication / authorization.</p>
+<pre><code>image: python:3.8-buster
+
+before_script:
+  - pip install mkdocs 'mkdocs-minify-plugin&gt;=0.2' 
+  - pip install 'mkdocs-git-revision-date-localized-plugin&gt;=0.4' 'mkdocs-awesome-pages-plugin&gt;=2.2.1' 'mkdocs-macros-plugin'
+
+  # Add your custom theme if not inside a theme_dir
+  # (https://github.com/mkdocs/mkdocs/wiki/MkDocs-Themes)
+  # - pip install mkdocs-material
+
+pages:
+  script:
+  - mkdocs build
+  - mv site public
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
+
+</code></pre><p>Similar setup works for Github by generating the website into a second, dedicated &ldquo;published&rdquo; Github pages repository. Unlike in the Gitlab case, all Github pages are public. For more information, refer to <a href="https://www.mkdocs.org/user-guide/deploying-your-docs/">this</a></p>
+<p>Another option is dedicated hosting site for MkDocs documentatio <a href="https://docs.readthedocs.io/en/stable/intro/getting-started-with-mkdocs.html">ReadTheDocs</a> which also supports Sphinx and RestructuredText</p>
+<p>And of course, there is always an option to use mkdocs build and copy the generated static site from <code>./public</code> site to the hosting provider - e.g. an S3 bucket.</p>
+<h2 id="single-vs-multi-repository-projects">Single vs Multi-repository projects</h2>
+<p>In cloud native projects, it is very rare nowadays that all project code is stored in a single repository. With microservices, serverless, infrastructure as a code, GitOps etc we usually end up with quite a few different repositories. We can use the techniques above for documenting everything related to one repository - e.g. one microservice - but when it comes to documentation involving multiple components, we have a similar issue as with source code file vs documentation files: we have to put this doc files outside of the component repositories.</p>
+<p>Each of the repositories internally uses it&rsquo;s MkDocs structure and has its own <code>mkdocs.yml</code> file. For the documentation that does not belong to any particular component, we create another MkDocs repository that plays three roles:</p>
+<ul>
+<li>holds all documentation for all inter-modular parts</li>
+<li>holds main navigational tree and links to submodule specific navigation</li>
+<li>checks out all component modules as git submodules</li>
+</ul>
+<p>As a proof of concept, we use this technique for documentation of the DIVE2 machine learning platform.</p>
+<p>Here is the &ldquo;top level&rdquo; repository:</p>
+<pre><code>➜  tree -L 2
+.
+└── dive-documentation
+    ├── CHANGELOG.md
+    ├── README.md
+    ├── dive-data-manager
+    ├── dive-data-manager-api
+    ├── dive-data-schema-svc
+    ├── dive-infra
+    ├── dive-job-manager
+    ├── dive-model-manager
+    ├── dive-prg-control-svc
+    ├── dive-sgm-control-svc
+    ├── dive-sgm-lib
+    ├── dive-sgm-svc-template
+    ├── dive-sls-batch
+    ├── dive-user-mgmt
+    ├── docs
+    ├── document_server.sh
+    ├── local-links.md
+    ├── mkdocs.yml
+    ├── pvt-python-commons
+    ├── pvt-python-rest
+    ├── pvt-sgm-color-norm-svc
+    └── tr-sgm-duplicates-svc
+
+18 directories, 5 files
+</code></pre><p>and here is the subset of the <code>mkdocs.yml</code> file:</p>
+<pre><code>site_name: DIVE2 joint Documentation
+repo_url: https://bitbucket.org/pivotree_h3/dive-documentation/src/master/
+repo_name: dive-documentation
+site_description: DIVE2  Documentation
+site_author: miro.adamy@pivotree.com
+copyright: (c) 2020 Pivotree - https://pivotree.com/
+
+nav:
+    - Home: index.md
+    - Infra: dive-infra.md
+    - Data:
+        Manager: data-manager.md
+        Manager API: data-manager-api.md
+        Schema: data-schema-svc.md
+    - Job Manager: job-manager.md
+    - Model Manager: model-manager.md
+    - User Management: user-mgmt.md
+    - Prg control: prg-control-svc.md
+    - Sagemaker:
+        - Sagemaker Control: sgm-control-svc.md
+        - Sagemaker Lib: sgm-lib.md
+        - Service Template: sgm-svc-template.md
+        - Duplicates Svc: tr-sgm-duplicates-svc.md
+        - Color Normalization: pvt-sgm-color-norm-svc.md
+    - Batch: sls-batch.md
+    - Libs:
+        pvt-python-commons: pvt-python-commons.md
+        pvt-python-rest: pvt-python-rest.md
+
+
+theme:
+    name: material
+
+markdown_extensions:
+
+... DELETED ...
+
+
+plugins:
+    - search
+    - macros:
+        include_dir: .
+
+</code></pre><p>The rendered website reaches into the submodules and displays information from services in one consistent unit, combined with additional information about architecture, module relations ect. All this without duplication or requirements for the service team to work outside of their area of focus.</p>
+<p>The mechanics is quite simple. The main menu - nav structure - refers to the files representing the submodule entry points. These files are located in the <code>docs</code> directory of the &ldquo;roof&rdquo; repository.</p>
+<pre><code>➜  dive-documentation git:(master) tree docs
+docs
+├── data-manager-api.md
+├── data-manager.md
+├── data-schema-svc.md
+├── dive-infra.md
+├── index.md
+├── job-manager.md
+├── model-manager.md
+├── prg-control-svc.md
+├── pvt-python-commons.md
+├── pvt-python-rest.md
+├── pvt-sgm-color-norm-svc.md
+├── sgm-control-svc.md
+├── sgm-lib.md
+├── sgm-svc-template.md
+├── sls-batch.md
+├── tr-sgm-duplicates-svc.md
+└── user-mgmt.md
+
+0 directories, 17 files
+</code></pre><p>How are these files hierarchically arranged is decided in the <code>nav</code> part of the YML file:</p>
+<p><img src="/img/markup/multi1.png" alt=""></p>
+<p>Each of this file contains one or more include directives, which are operating from the top directory of the repository and have therefore access to any submodule markdown files:</p>
+<pre><code>➜  dive-documentation git:(master) cat docs/model-manager.md
+{% include 'dive-model-manager/README.md' %}
+</code></pre><p>If the structure of the submodule is more complex, the &ldquo;module file&rdquo; can contain more directives or links.</p>
+<p>When all this is put together, we get a combined, unified view of the system documentation with all submodules included. It is fully in the hands of the services team what the service documentation looks like and it is fully in the hands of the documentation repository maintainer which of those will be published and where in the navigation tree.</p>
+<p><img src="/img/markup/multi5.png" alt=""></p>
+<h2 id="other-tools">Other tools:</h2>
+<p>During last couple of months, we have looked at and used several other systems related to documentation generation</p>
+<ul>
+<li>Antora - Asciidoc based, multi-repo system</li>
+<li>Hugo - Go template based Markdown generator</li>
+<li>Jekyll / Hyde - another generator, Ruby based</li>
+</ul>
+<p>but this post is getting way too long, so I will get back to some of them in the future.</p>
+<p>There is certainly no shortage of available generators and solution - check the <a href="https://jamstack.org/generators/">dedicated site</a>. My colleague will continue with detailed case study on one of them in <a href="/2020-11-24-documentation-gatsby/">this blogpost</a></p>
+
+</article>
+
+		</main>
+		
+				<div class="hide-print sans-serif f6 f5-l mt5 ph3 pb6 center nested-copy-line-height lh-copy nested-links mw-100 measure-wide">
+		<div class="about-the-author">
+		
+			
+			
+				
+					<p><img src="/img/miro.adamy.jpg" alt="Miro"></p>
+<p>Miro Adamy is a DevOps/Cloud engineer, working for <a href="https://pivotree.com">Pivotree</a> on designing and creating cloud systems infrastructure. He enjoys reading books, surfing Web, walking, thinking and occasionally writing on various topics here and <a href="https://www.miroadamy.com">elsewhere</a></p>
+
+				
+			
+		
+		</div>
+		
+	</div>
+
+		
+		
+		
+		<footer class="hide-print sans-serif f6 fw1 bg-black near-white bottom-0 w-100 pa3" role="contentinfo">
+			<p class="w-50 fr tr">
+			<a class="no-underline near-white" href="https://github.com/xaprb/story"><img class="dib" title="Made with Hugo and Story" alt="Story logo" src="https://blog.pivotree.cloud/img/story-logo-white.svg" style="width: 1.5rem; height: 1.5rem" /></a>
+			</p>
+			<p class="w-50 near-white">
+				&copy; 2021 Pivotree Team
+			</p>
+		</footer>
+		
+	
+	
+	</body>
+</html>

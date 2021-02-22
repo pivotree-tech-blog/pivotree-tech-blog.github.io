@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Documentation with Auth0 and Gatsby</title>
+		<link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.pivotree.cloud/index.xml">
+		<link rel="canonical" href="https://blog.pivotree.cloud/2020-11-24-documentation-gatsby/">
+		
+		<link rel="shortcut icon" type="image/png" href="https://blog.pivotree.cloud/apple-touch-icon-precomposed.png">
+		<meta name="description" content="Publishing internal documentation with authentication using Gatsby framework and Auth0">
+		
+		<meta name="generator" content="Hugo 0.68.3" />
+
+		
+		<meta property="og:title" content="Documentation with Auth0 and Gatsby" />
+		<meta property="og:type" content="article" />
+		<meta property="og:image" content="https://blog.pivotree.cloud/img/unsplash-photos-vHnVtLK8rCc.jpg" />
+		<meta property="og:description" content="Publishing internal documentation with authentication using Gatsby framework and Auth0" />
+		<meta property="og:url" content="https://blog.pivotree.cloud/2020-11-24-documentation-gatsby/" />
+		<meta property="og:site_name" content="Documentation with Auth0 and Gatsby" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@TeamPivotree" />
+
+
+		
+		<link rel="stylesheet" href="https://blog.pivotree.cloud/css/tachyons.min.css" />
+		<link rel="stylesheet" href="https://blog.pivotree.cloud/css/story.css" />
+		<link rel="stylesheet" href="https://blog.pivotree.cloud/css/descartes.css" />
+		
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+		<link href="https://fonts.googleapis.com/css?family=Quattrocento+Sans:400,400i,700,700i|Quattrocento:400,700|Spectral:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
+		
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		
+		<script src="https://blog.pivotree.cloud/js/story.js"></script>
+
+	</head>
+	<body class="ma0 bg-white  page-kind-page is-page-true ">
+		
+		<header class="cover bg-top" style="background-image: url('https://blog.pivotree.cloud/img/unsplash-photos-vHnVtLK8rCc.jpg'); background-position: center;">
+			<div class="bg-black-30 bb bt">
+
+				<nav class="hide-print sans-serif  border-box pa3 ph5-l">
+					<a href="https://blog.pivotree.cloud/" title="Home">
+						<img src="https://blog.pivotree.cloud/img/logo.jpg" class="w2 h2 br-100" alt="Pivotree Cloud Technology Blog - POC" />
+					</a>
+					<div class="fr h2 pv2 tr">
+						<a class="link f5 ml2 dim near-white" href="/archives/">Archives</a>
+						<a class="link f5 ml2 dim near-white" href="/slides/">Slides</a>
+						<a class="link f5 ml2 dim near-white" href="/talks/">Talks</a>
+						<a class="link f5 ml2 dim near-white" href="https://github.com/thinkwrap"><i class="fab fa-github-square"></i></a>
+						<a class="link f5 ml2 dim near-white fas fa-rss-square" href="https://blog.pivotree.cloud/index.xml" title="RSS Feed"></a>
+						<a class="link f5 ml2 dim near-white fas fa-search" href="https://blog.pivotree.cloud/search/" role="search" title="Search"></a>
+					</div>
+				</nav>
+
+				<div id="hdr" class="tc-l pv4-ns pv5-l pv2 ph3 ph4-ns">
+					<h1 class="near-white mt1-ns f2 fw3 mb0 mt0 lh-title">Documentation with Auth0 and Gatsby</h1>
+					<h2 class="near-white mt3-l mb4-l fw1 f6 f3-l measure-wide-l center lh-copy mt2 mb3">
+						
+						
+							
+								Published
+								<time datetime="2020-11-24T13:00:00&#43;08:00">Nov 24, 2020</time>
+								<span class="display-print">by Ranopriyo Neogy</span>
+								 in <a href="https://blog.pivotree.cloud/categories/devops" class="no-underline category near-white dim">DevOps</a>, <a href="https://blog.pivotree.cloud/categories/documentation" class="no-underline category near-white dim">Documentation</a>, <a href="https://blog.pivotree.cloud/categories/best-practices" class="no-underline category near-white dim">Best Practices</a>
+								<span class="display-print">at https://blog.pivotree.cloud/2020-11-24-documentation-gatsby/</span>
+							
+						
+					</h2>
+				</div>
+
+				
+				
+				
+				
+
+			</div>
+		</header>
+		
+		<main role="main">
+		
+<article class="center bg-white br-3 pv1 ph4 lh-copy f5 nested-links mw7">
+	<h2 id="background">Background</h2>
+<p>With modern technologies and available Frameworks, we have successfully eliminated the complexities involved in building an end to end Application and have eased the entire development and deployment process to a great extent. As we finish writing the Application and our next goal is to publish it as an open source project or push it to production, a major component that will make the code more appealing and useful is having a proper documentation about the nitty-gritty involved in the development process.</p>
+<p>Few days back a similar requirement came up in my team and I was asked to build an application that can host our internal documents (markdown pages) and implement a secure layer to restrict the access to teams / Pivotree specific users.</p>
+<p>An application that was earlier used to manage the markdown contents was MkDocs, which implements Pyhton-Markdown library to render Markdown documents to HTML. It was hosted on AWS Amplify and secured using basic Access Control for amplify hosted applications. Although it was working flawlessly, the challenge was to put a more secure layer of Authentication on top of it (e.g. OneLogin, Cognito, Auth-0). This application was using shared credentials which restricts its usability to wider audience.</p>
+<p>To keep things simple, we started doing some research and came up with an alternative which is built on top of React JS called Gatsby. But before we jump on the development/implementation, we need to get familiar with few components involved in building an application using Gatsby.</p>
+<h2 id="static-site-generator---gatsby">Static Site Generator - Gatsby</h2>
+<p>In a conventional 3-Tier monolithic/ microservice architecture we have a Front-End hosted on a webserver like Apache or Nginx as Tier-1, a middle-tier which has the application/ services and Tier-3 which is composed of the back-end databases. Whenever a call is made from the client, the request goes all the way to database and fetches the data for the UI. This sometimes can degrade the application performance based on the time spend on back-end query execution, query execution plan and the volume of the requested data.</p>
+<p>Gatsby on the other hand precomputes all states in this case, assets and dynamic content or data so webpage loads are blazing fast. This is implemented using JAMstack architecture, which pre-delivers stable markup to render the page structure and appearance and then uses JavaScript-based client-side service workers to serve up dynamic content via APIs. The Gatsby framework anticipates what is likely to be requested next, then starts to fetch and preload that content in the background before it’s even requested by the browser.</p>
+<p><img src="/img/gatsby_img/Jamstack.png" alt=""></p>
+<h2 id="graphql">GraphQL</h2>
+<p>Gatsby uses GraphQL to pull data from the markdown files. The result of the query (JSON output) is injected by Gatsby into the Template component as data.</p>
+<h3 id="sample-query">Sample Query</h3>
+<h4 id="input">Input</h4>
+<pre><code>
+  hero(episode: $episode) {
+    name
+    friends {
+      name
+    }
+  }
+}
+
+{
+  &quot;episode&quot;: &quot;JEDI&quot;
+}
+</code></pre><h4 id="output">Output</h4>
+<pre><code>{
+  &quot;data&quot;: {
+    &quot;hero&quot;: {
+      &quot;name&quot;: &quot;R2-D2&quot;,
+      &quot;friends&quot;: [
+        {
+          &quot;name&quot;: &quot;Luke Skywalker&quot;
+        },
+        {
+          &quot;name&quot;: &quot;Han Solo&quot;
+        },
+        {
+          &quot;name&quot;: &quot;Leia Organa&quot;
+        }
+      ]
+    }
+  }
+}
+
+</code></pre><h2 id="starting-with-gatsby">Starting with Gatsby</h2>
+<ol>
+<li>Fork a theme that we want to use as per the requirement from starter libraries- Here<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></li>
+</ol>
+<pre><code>git clone &lt;Repository_Link&gt;
+</code></pre><ol start="2">
+<li>Navigate into your new site&rsquo;s directory</li>
+</ol>
+<pre><code> cd &lt;project_folder_path&gt;
+</code></pre><ol start="3">
+<li>Install all dependencies mentioned in package.json (if any) for the downloaded starter code.</li>
+</ol>
+<pre><code>  yarn install
+</code></pre><ol start="4">
+<li>Run the project on local server using  below command.</li>
+</ol>
+<pre><code>gatsby develop
+</code></pre><ol start="5">
+<li>If everything worked fine we should be getting the app served at localhost:8000.</li>
+</ol>
+<p><img src="/img/gatsby_img/Terminal.png" alt=""></p>
+<ol start="6">
+<li>We can create a separate branch for version control (Git, Bitbucket, etc.) and push our changes accordingly.</li>
+</ol>
+<h2 id="architecture---gatsby-application">Architecture - Gatsby Application</h2>
+<p><img src="/img/gatsby_img/SSG.png" alt=""></p>
+<h2 id="implementation">Implementation</h2>
+<p>Below screenshot shows the working directory structure and high-level view of the authentication code used to secure the application. Before we dive deep into authentication implentation let&rsquo;s have some basic understanding on the individual components like Auth-0 and OneLogin.</p>
+<p><img src="/img/gatsby_img/Workspace.png" alt=""></p>
+<h2 id="authentication">Authentication</h2>
+<h3 id="auth0">Auth0</h3>
+<ul>
+<li>Auth0 is a flexible and easy to use solution to add authentication and authorization services to our applications.</li>
+<li>We can connect any application (written in any language or on any stack) to Auth0 and define the identity providers you want to use (how you want your users to log in).</li>
+<li>Each time a user tries to authenticate, Auth0 will verify their identity and send the required information back to your app.</li>
+<li>We can use Auth0 for free with up to 7,000 active users, unlimited logins.</li>
+<li>To get started with Auth-0 we can register on their website<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> and start using the service.</li>
+</ul>
+<h3 id="onelogin">OneLogin</h3>
+<ul>
+<li>OneLogin Single Sign-On uses Security Assertion Markup Language (SAML) to simplify the login process.</li>
+<li>The single sign-on services provided by OneLogin is very helpful and of vital importance while rolling out new applications to the whole organization, no matter the location or time zone.</li>
+<li>Allow end-users to login to OneLogin using their Social Identity Provider credentials from services such as Facebook, Google, LinkedIn, and Amazon.</li>
+<li>SSO saves time and energy because users are not required to repeatedly log into multiple applications.</li>
+</ul>
+<h2 id="console---auth0-and-onelogin">Console - Auth0 and OneLogin</h2>
+<p><img src="/img/gatsby_img/console.png" alt=""></p>
+<h3 id="frontmatter---metadata-in-markdown-files">Frontmatter - Metadata in Markdown Files</h3>
+<pre><code>---
+path: &quot;/account/architect-and-design/aws-account-strategy&quot;
+type: &quot;pdocs&quot;
+---
+
+</code></pre><h3 id="template---to-display-markdown-to-html-post-authentication">Template - To Display Markdown to HTML post Authentication</h3>
+<pre><code> function Template ({data}) {
+    if (!isAuthenticated()) {
+        login()
+        return &lt;p&gt;Redirecting to login...&lt;/p&gt;
+      }
+
+      const { markdownRemark } = data
+      const { frontmatter, html } = markdownRemark
+      //const user = getProfile()
+     
+    
+    return (
+        &lt;Layout&gt;
+        &lt;SEO title={frontmatter.title} /&gt;
+
+        &lt;h1&gt;{frontmatter.title}&lt;/h1&gt;
+        &lt;div 
+            dangerouslySetInnerHTML={{ __html: html }}
+        /&gt;
+        &lt;/Layout&gt;
+    )
+  }
+
+</code></pre><h3 id="securing-the-central-component">Securing the central component</h3>
+<pre><code>import React from &quot;react&quot;
+import { Router } from &quot;@reach/router&quot;
+import { login,isAuthenticated, getProfile } from &quot;../utils/auth&quot;
+import Layout from &quot;../components/layout&quot;
+
+const Home = ({ user }) =&gt; {    
+return &lt;p&gt;This static site has all necessary information about Platform Engineering in Pivotree...&lt;/p&gt;
+}
+
+const Account = () =&gt; {
+  if (!isAuthenticated()) {
+    login()
+    return &lt;p&gt;Redirecting to login...&lt;/p&gt;
+  }
+
+  const user = getProfile()
+ 
+  return (
+  &lt;Layout&gt;
+    &lt;&gt;
+      &lt;Router&gt;
+        &lt;Home path=&quot;/account/&quot; user={user} component={Home}/&gt;
+      &lt;/Router&gt;
+    &lt;/&gt;
+    &lt;/Layout&gt;
+  )
+}
+
+export default Account
+
+</code></pre><h3 id="authjs">Auth.js</h3>
+<pre><code>import auth0 from &quot;auth0-js&quot;
+import { navigate } from &quot;gatsby&quot;
+
+const isBrowser = typeof window !== &quot;undefined&quot;
+
+const auth = isBrowser
+  ? new auth0.WebAuth({
+      domain: process.env.AUTH0_DOMAIN,
+      clientID: process.env.AUTH0_CLIENTID,
+      redirectUri: process.env.AUTH0_CALLBACK,
+      responseType: &quot;token id_token&quot;,
+      scope: &quot;openid profile email&quot;,
+    })
+  : {}
+
+  const tokens = {
+    accessToken: false,
+    idToken: false,
+    expiresAt: false,
+  }
+  
+  let user = {}
+  
+  export const isAuthenticated = () =&gt; {
+    if (!isBrowser) {
+      return;
+    }
+  
+    return localStorage.getItem(&quot;isLoggedIn&quot;) === &quot;true&quot;
+  }
+  
+  export const login = () =&gt; {
+    if (!isBrowser) {
+      return
+    }
+  
+    auth.authorize()
+  }
+  
+  const setSession = (cb = () =&gt; {}) =&gt; (err, authResult) =&gt; {
+    if (err) {
+      navigate(&quot;/&quot;)
+      cb()
+      return
+    }
+  
+    if (authResult &amp;&amp; authResult.accessToken &amp;&amp; authResult.idToken) {
+      let expiresAt = authResult.expiresIn * 1000 + new Date().getTime()
+      tokens.accessToken = authResult.accessToken
+      tokens.idToken = authResult.idToken
+      tokens.expiresAt = expiresAt
+      user = authResult.idTokenPayload
+      localStorage.setItem(&quot;isLoggedIn&quot;, true)
+      navigate(&quot;/account&quot;)
+      cb()
+    }
+  }
+  
+  export const handleAuthentication = () =&gt; {
+    if (!isBrowser) {
+      return;
+    }
+  
+    auth.parseHash(setSession())
+  }
+  
+  export const getProfile = () =&gt; {
+    return user
+  }
+
+
+  export const silentAuth = callback =&gt; {
+    if (!isAuthenticated()) return callback()
+    auth.checkSession({}, setSession(callback))
+  }
+
+  export const logout = () =&gt; {
+    localStorage.setItem(&quot;isLoggedIn&quot;, false)
+    auth.logout()
+  }
+
+</code></pre><h3 id="the-application-is-now-secured-with-auth0-and-sso-enabled-using-onelogin">The Application is now secured with Auth0 and SSO enabled using OneLogin</h3>
+<p><img src="/img/gatsby_img/Auth0.png" alt=""></p>
+<h2 id="hosting">Hosting</h2>
+<p>There are multiple options available to host the website like GatsbyCloud, Netlify, S3, Heroku and many more. However, I always find it easy and interesting to deploy using AWS Amplify. Although it&rsquo;s my personal preference you can always use any of the above mentioned.</p>
+<p>Deploying an application through Amplify can be done using both Amplify CLI and console. Here are some basic commands to deploy using CLI.</p>
+<p>In the project folder we must initialize the Amplify using <strong>amplify init</strong>.
+After this we can add hosting using <strong>amplify add hosting</strong>. Since in this scenario I have used Auth-0 for authentication, however as an alternative we can also use Amazon Cognito for authentication using <strong>amplify add auth</strong> and further configure it with SAML, Google, Facebook or Amazon as Federated Identity providers. We can modify the <strong>amplify.yaml</strong> file as per our build requirements.</p>
+<h3 id="detailed-steps-to-host-the-website-using-amplify-console">Detailed steps to host the website using Amplify console:</h3>
+<ul>
+<li>
+<p>Log in to the AWS Account, navigate to Amplify Console and choose Get Started under Deploy.</p>
+</li>
+<li>
+<p>Connect a branch from your GitHub, Bitbucket or GitLab repository. Connecting your repository allows Amplify to deploy updates on every code commit to a branch.</p>
+</li>
+<li>
+<p>Accept the default build settings. Give the Amplify Console permission to deploy backend resources with your frontend with a service role. This allows the Console to detect changes to both your backend and frontend on every code commit and make updates.</p>
+</li>
+<li>
+<p>Review your changes and then choose Save and deploy. The Amplify Console will pull code from your repository, build changes to the backend and frontend, and deploy your build artifacts at <a href="https://master.unique-id.amplifyapp.com">https://master.unique-id.amplifyapp.com</a>. Bonus: Screenshots of your app on different devices to find layout issues.</p>
+<p><img src="/img/gatsby_img/Amplify.png" alt=""></p>
+</li>
+</ul>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://www.gatsbyjs.com/starters/?v=2">Gatsby Starter Libraries</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p><a href="https://auth0.com/">Auth0</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+</article>
+
+		</main>
+		
+				<div class="hide-print sans-serif f6 f5-l mt5 ph3 pb6 center nested-copy-line-height lh-copy nested-links mw-100 measure-wide">
+		<div class="about-the-author">
+		
+			
+			
+				
+					<p><img src="/img/rano.jpg" alt="Rano"></p>
+<p>Ranopriyo Neogy is a Site Reliability Engineer, working for <a href="https://pivotree.com">Pivotree</a> on designing and developing Cloud Applications. He enjoys photography, surfing Web, watching sci-fi movies and reading Technical blogs.</p>
+
+				
+			
+		
+		</div>
+		
+	</div>
+
+		
+		
+		
+		<footer class="hide-print sans-serif f6 fw1 bg-black near-white bottom-0 w-100 pa3" role="contentinfo">
+			<p class="w-50 fr tr">
+			<a class="no-underline near-white" href="https://github.com/xaprb/story"><img class="dib" title="Made with Hugo and Story" alt="Story logo" src="https://blog.pivotree.cloud/img/story-logo-white.svg" style="width: 1.5rem; height: 1.5rem" /></a>
+			</p>
+			<p class="w-50 near-white">
+				&copy; 2021 Pivotree Team
+			</p>
+		</footer>
+		
+	
+	
+	</body>
+</html>

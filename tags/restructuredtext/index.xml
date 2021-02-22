@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Restructuredtext on Pivotree Cloud Technology Blog - POC</title>
+    <link>https://blog.pivotree.cloud/tags/restructuredtext/</link>
+    <description>Recent content in Restructuredtext on Pivotree Cloud Technology Blog - POC</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 24 Nov 2020 13:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.pivotree.cloud/tags/restructuredtext/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Documentation with Auth0 and Gatsby</title>
+      <link>https://blog.pivotree.cloud/2020-11-24-documentation-gatsby/</link>
+      <pubDate>Tue, 24 Nov 2020 13:00:00 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/2020-11-24-documentation-gatsby/</guid>
+      <description>Background With modern technologies and available Frameworks, we have successfully eliminated the complexities involved in building an end to end Application and have eased the entire development and deployment process to a great extent. As we finish writing the Application and our next goal is to publish it as an open source project or push it to production, a major component that will make the code more appealing and useful is having a proper documentation about the nitty-gritty involved in the development process.</description>
+    </item>
+    
+    <item>
+      <title>Documenting multi-repository projects</title>
+      <link>https://blog.pivotree.cloud/2020-11-23-documentation-multi-repo/</link>
+      <pubDate>Mon, 23 Nov 2020 13:00:00 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/2020-11-23-documentation-multi-repo/</guid>
+      <description>This blog post is a de-powerpointized version of a brownbag session in Pivotree. The goal was to increase awareness of tools and techniques for information / knowledge capture in the projects, specifically focusing on producing quality documentation so that everybody in project can access it and contribute to it, not only developers. We wanted to look at the tools that would allow engineers keep using their tools of trade (without impact on developer’s productivity) and at the same time make the information available without duplication of work to increase re-findability of information.</description>
+    </item>
+    
+  </channel>
+</rss>

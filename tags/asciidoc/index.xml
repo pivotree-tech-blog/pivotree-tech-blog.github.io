@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Asciidoc on Pivotree Cloud Technology Blog - POC</title>
+    <link>https://blog.pivotree.cloud/tags/asciidoc/</link>
+    <description>Recent content in Asciidoc on Pivotree Cloud Technology Blog - POC</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 23 Nov 2020 13:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.pivotree.cloud/tags/asciidoc/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Documenting multi-repository projects</title>
+      <link>https://blog.pivotree.cloud/2020-11-23-documentation-multi-repo/</link>
+      <pubDate>Mon, 23 Nov 2020 13:00:00 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/2020-11-23-documentation-multi-repo/</guid>
+      <description>This blog post is a de-powerpointized version of a brownbag session in Pivotree. The goal was to increase awareness of tools and techniques for information / knowledge capture in the projects, specifically focusing on producing quality documentation so that everybody in project can access it and contribute to it, not only developers. We wanted to look at the tools that would allow engineers keep using their tools of trade (without impact on developer’s productivity) and at the same time make the information available without duplication of work to increase re-findability of information.</description>
+    </item>
+    
+  </channel>
+</rss>

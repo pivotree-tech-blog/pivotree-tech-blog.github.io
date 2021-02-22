@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python on Pivotree Cloud Technology Blog - POC</title>
+    <link>https://blog.pivotree.cloud/tags/python/</link>
+    <description>Recent content in python on Pivotree Cloud Technology Blog - POC</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 18 Feb 2021 13:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.pivotree.cloud/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How to monitor Bitbucket user and group permissions with API</title>
+      <link>https://blog.pivotree.cloud/2021-02-18-bitbucket-user-groups/</link>
+      <pubDate>Thu, 18 Feb 2021 13:00:00 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/2021-02-18-bitbucket-user-groups/</guid>
+      <description>How to manage users and groups in Bitbucket Use case:
+I want to maintain users and groups and their access to repositories in an organization in Bitbucket. To make sure I do not miss newly changed admin access, I want to use the Bitbucket API to retrieve the list of permissions on repository basis and on user/group bases.
+Setup Bitbucket requires a username and password to access the API. This information is stored in environment variables BBUSER and BBPASSWORD.</description>
+    </item>
+    
+    <item>
+      <title>How to mirror Github and Bitbucket repositories</title>
+      <link>https://blog.pivotree.cloud/2021-02-17-mirroring-repos/</link>
+      <pubDate>Wed, 17 Feb 2021 13:00:00 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/2021-02-17-mirroring-repos/</guid>
+      <description>Mirroring large number of GitHub or Bitbucket repositories Use case:
+I want to create local clone of a large number of repositories from an organization in GitHub / Bitbucket.
+Assumptions  user has SSH key registered with the GH / BB - can clone using ssh protocol user has successfully cloned at least one repo from command line before (the /etc/hosts contains host entries for BB and GH) user has modern version of Python 3 installed (3.</description>
+    </item>
+    
+    <item>
+      <title>DockerCon 2020</title>
+      <link>https://blog.pivotree.cloud/2020-05-30-dockercon-2020/</link>
+      <pubDate>Sat, 30 May 2020 11:22:48 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/2020-05-30-dockercon-2020/</guid>
+      <description>&lt;p&gt;Notes from 2020&amp;rsquo;s Online Event - DockerCon live.&lt;/p&gt;
+&lt;p&gt;Links to selected presentations and related content.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Reference Architecture as a Code</title>
+		<link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.pivotree.cloud/index.xml">
+		<link rel="canonical" href="https://blog.pivotree.cloud/2020-08-07-architecture-as-a-code/">
+		
+		<link rel="shortcut icon" type="image/png" href="https://blog.pivotree.cloud/apple-touch-icon-precomposed.png">
+		<meta name="description" content="Version control friendly approach to designing and documenting the architecture">
+		
+		<meta name="generator" content="Hugo 0.68.3" />
+
+		
+		<meta property="og:title" content="Reference Architecture as a Code" />
+		<meta property="og:type" content="article" />
+		<meta property="og:image" content="https://blog.pivotree.cloud/img/unsplash-photos-5mZ_M06Fc9g.jpg" />
+		<meta property="og:description" content="Version control friendly approach to designing and documenting the architecture" />
+		<meta property="og:url" content="https://blog.pivotree.cloud/2020-08-07-architecture-as-a-code/" />
+		<meta property="og:site_name" content="Reference Architecture as a Code" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@TeamPivotree" />
+
+
+		
+		<link rel="stylesheet" href="https://blog.pivotree.cloud/css/tachyons.min.css" />
+		<link rel="stylesheet" href="https://blog.pivotree.cloud/css/story.css" />
+		<link rel="stylesheet" href="https://blog.pivotree.cloud/css/descartes.css" />
+		
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+		<link href="https://fonts.googleapis.com/css?family=Quattrocento+Sans:400,400i,700,700i|Quattrocento:400,700|Spectral:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
+		
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		
+		<script src="https://blog.pivotree.cloud/js/story.js"></script>
+
+	</head>
+	<body class="ma0 bg-white  page-kind-page is-page-true ">
+		
+		<header class="cover bg-top" style="background-image: url('https://blog.pivotree.cloud/img/unsplash-photos-5mZ_M06Fc9g.jpg'); background-position: center;">
+			<div class="bg-black-30 bb bt">
+
+				<nav class="hide-print sans-serif  border-box pa3 ph5-l">
+					<a href="https://blog.pivotree.cloud/" title="Home">
+						<img src="https://blog.pivotree.cloud/img/logo.jpg" class="w2 h2 br-100" alt="Pivotree Cloud Technology Blog - POC" />
+					</a>
+					<div class="fr h2 pv2 tr">
+						<a class="link f5 ml2 dim near-white" href="/archives/">Archives</a>
+						<a class="link f5 ml2 dim near-white" href="/slides/">Slides</a>
+						<a class="link f5 ml2 dim near-white" href="/talks/">Talks</a>
+						<a class="link f5 ml2 dim near-white" href="https://github.com/thinkwrap"><i class="fab fa-github-square"></i></a>
+						<a class="link f5 ml2 dim near-white fas fa-rss-square" href="https://blog.pivotree.cloud/index.xml" title="RSS Feed"></a>
+						<a class="link f5 ml2 dim near-white fas fa-search" href="https://blog.pivotree.cloud/search/" role="search" title="Search"></a>
+					</div>
+				</nav>
+
+				<div id="hdr" class="tc-l pv4-ns pv5-l pv2 ph3 ph4-ns">
+					<h1 class="near-white mt1-ns f2 fw3 mb0 mt0 lh-title">Reference Architecture as a Code</h1>
+					<h2 class="near-white mt3-l mb4-l fw1 f6 f3-l measure-wide-l center lh-copy mt2 mb3">
+						
+						
+							
+								Published
+								<time datetime="2020-08-10T13:00:00&#43;08:00">Aug 10, 2020</time>
+								<span class="display-print">by Miro Adamy</span>
+								 in <a href="https://blog.pivotree.cloud/categories/devops" class="no-underline category near-white dim">DevOps</a>, <a href="https://blog.pivotree.cloud/categories/architecture" class="no-underline category near-white dim">Architecture</a>
+								<span class="display-print">at https://blog.pivotree.cloud/2020-08-07-architecture-as-a-code/</span>
+							
+						
+					</h2>
+				</div>
+
+				
+				
+				
+				
+
+			</div>
+		</header>
+		
+		<main role="main">
+		
+<article class="center bg-white br-3 pv1 ph4 lh-copy f5 nested-links mw7">
+	<h2 id="many-shapes-of-architecture">Many shapes of Architecture</h2>
+<p>According to the <a href="https://martinfowler.com/architecture/">wise people</a>, an architecture is the shared understanding that the expert developers/system builders/maintainers have of the system design. It&rsquo;s purpose is to maximize the
+probability that the decisions you have to make early in a project are the right ones. It is sort of a blueprint for the future system and captures parts, relations, boundaries, constraints.</p>
+<p>In our business (we build and run environments and solutions for eCommerce, data management and other business activities of our customers), an important subtype of architecture is Reference Architecture. It is an architecture that serves both as a capture of best practices for a particular business case as well as a living, evolving template for creating new instances of that type of an environment. Both best practice as well as evolving features are important: the reference architecture (RA) serves as knowledge gathering in the ever changing world of cloud. As new features of AWS or Azure come, the RA needs to absorb them to incorporate latest advances and to use the best price / performance options available.</p>
+<p>Architecture can take many physical forms. Traditionally, back in the waterfall age, it used to be a long Word document, a collection of Visio drawings or combination of both. Eventually Word was replaced by Google Docs and/or Confluence, but the same idea stayed: the prose written for humans that use manual processes to transform the prose to instances of a system, usually using cloud management console or some other tool.
+With the arrival of Cloudformation and Terraform, the manual process got scripted which helped repeatability during the environment creation phase, but it also introduced a new challenge: a gap between code living in version control and documentation living in a Wiki. These two separate representations of the same idea were stored in different places, requiring different tools and different credentials - despite being managed and worked on by the same people. As a natural consequence, the documentation often got out of sync with the code and instead of making understanding better and explaining / documenting, it added confusion and stopped being useful.</p>
+<p>Some people say the special dedicated tools that hold both are the answer. Such a tool would provide a single place to hold all the information, allow creating diagrams, add documentation and maintain or generate the code. I am a bit sceptical when it comes to these kinds of solutions. I have seen good partial solution in the past (e.g. Enterprise Architect) that were delivering value, but they were limited to subset of languages and notations - e.g. UML diagrams
+and Java/C++ or object oriented languages. I am not aware of any tool I would consider full scale replacement for good documentation plus code. Some are promising - e.g. <a href="https://medium.com/faun/modules-tf-convert-visual-aws-diagram-into-terraform-configurations-e61fb0574b10">Cloudcraft plugin from Anton Babenko</a>. I imagine this can be an excellent option for a startup or small company, but does not allow us enough flexibility to fit within existing tools and backend systems we have.</p>
+<p>Rest of this blog entry will describe one possible way we are trying to overcome the documentation / code gap by using open standards, opensource tools and adhering to <a href="https://www.writethedocs.org/guide/docs-as-code/">documentation as a code</a> philosophy.</p>
+<p>As a result, we define Reference Architecture as code artifact - repository that contains both executable description (Terraform Code) as well as all the documentation explaining decisions, options and alternatives using best practices such as <a href="https://aws.amazon.com/architecture/well-architected/">WAF</a>, adapted to company and customers special needs - e.g. enforcing / standardising naming, tagging, policies and in general capturing knowledge about the system built.</p>
+<h2 id="selecting-the-format">Selecting the format</h2>
+<p>The documentation format should satisfy these requirements</p>
+<ul>
+<li>must be file oriented (not living in database) =&gt; it can goes with terraform code to same repo</li>
+<li>must be Git friendly = allow good versioning and comparison</li>
+<li>must be easy to work with for developers</li>
+<li>must be expressive enough to allow formatting for pleasant Web reading experience (unlike e.g. man or pod)</li>
+<li>must allow easy way to generate documentation for set of interconnected pages</li>
+<li>must be open, well supported with good ecosystem for tools and automation</li>
+<li>must be CI/CD friendly (using pipelines in Bitbucket/GitHub/Gitlab)</li>
+</ul>
+<p>We have ended up with a shortlist of three main contenders:</p>
+<ul>
+<li>MarkDown with MkDocs / Material Theme</li>
+<li>AsciiDoc</li>
+<li>RestructuredText with Sphinx</li>
+</ul>
+<p>After evaluating each (details of this evaluation will be published in a separate post) we ended up selecting the MarkDown.</p>
+<p>The main three reasons why we ended up selecting MarkDown were:</p>
+<ul>
+<li>familiarity - Markdown is best known format, zero learning curve</li>
+<li>MkDocs is Python based and with Material Theme competes very well with Sphinx generated sites</li>
+<li>extensibility - using Macros module allowed to solve the file include problem</li>
+</ul>
+<h2 id="reference-architecture-with-markdown-and-mkdocs">Reference Architecture with Markdown and MkDocs</h2>
+<p>To add the documentation-as-a-code to the Terraform repo (the actual code), there is very little to do.
+Absolute necessary are only two files:</p>
+<ul>
+<li><code>./mkdocs.yml</code> - defines the structure of the navigation and MkDocs configuration</li>
+<li><code>./docs/index.md</code> - default directory and one Markdown file (the name can me different than index.md)</li>
+</ul>
+<p>It is usually a good idea to add <code>requirements.txt</code> file for those users who prefer to install MkDocs locally and a shell script
+that runs MkDocs in Docker to the root:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker run --rm -it -p 8000:8000 -v <span style="color:#66d9ef">$(</span>pwd<span style="color:#66d9ef">)</span>:/docs miroadamy/mkdocs-material $@
+</code></pre></div><p>and <code>requirements.txt</code></p>
+<pre><code>mkdocs
+mkdocs-material
+mkdocs-minify-plugin&gt;=0.2
+mkdocs-git-revision-date-localized-plugin&gt;=0.4
+mkdocs-awesome-pages-plugin&gt;=2.2.1
+mkdocs-macros-plugin
+diagrams
+</code></pre><p>The last dependency is optional - only if you plan to use a Python based diagramming tool later on.</p>
+<p>The above structure is for the documentation. The Terraform code lives in folders that are dedicated to environments
+or variants of environments. The general structure of the Terraform code is:</p>
+<pre><code>./ - PROD = named environment
+   - UAT  = named environment
+   - UAT-HA = named variant
+   - DEVQA = named environment
+   - modules/
+        - database/ - local module for RDS provisioning
+        - vpn/      - local module 
+   - examples/
+        - minimal/ = example of a minimal environment
+        - everything = the HA top environment example
+        - typical/ = example of most common use case
+        - typical-mysql = example specific to a particular database
+</code></pre><p>We use three kind of Terraform modules:</p>
+<pre><code>* platform library
+* community modules
+* local RA specific modules
+</code></pre>
+<p>The most useful are Platform Library modules. These are internal, mostly closed source modules that provide
+packaged templates for making sure that environments we build for our customers contain all necessary security a
+best practices features from the ground up. For example, proper and consistent tagging of the resources is crucial for
+proper monitoring and cost reporting, policies are super important for security, logs processing for integration with
+the monitoring tools CloudOps team uses and general structure, default variables and locals to make sure that the account works well inside our AWS organization hierarchy and Pivotree workflow.</p>
+<p>Platform library is maintained by dedicated internal team and while it is pretty comprehensive, it does not cover
+everything. We often adapt community modules, add our own extensions / bug fixes / documentation and republish
+the fork as opensource back to the community.</p>
+<p>The local RA modules often are &ldquo;second degree modules&rdquo; - the modules that are using other modules. We use them for
+making sure there is good balance between consistency among environments and respecting the DRY (don&rsquo;t repeat yourself)
+design principle.</p>
+<p>Each of the Terraform folders for environment, module or example can have it&rsquo;s own <code>docs/</code> subfolder
+where the environment/module/example specific information can reside. The main navigation can easily point to these
+pages and provide a consistent, global documentation tree.</p>
+<p>The key feature for good user experience is ability to include both Markdown fragments and code files into the compiled
+documentation - this is provided by <code>include</code> macro added in the <code>mkdocs.yml</code> combined with a &ldquo;proxy&rdquo; markdown files that
+have the name of the environment/module or example they represent and simply include the main Markdown file for that environment</p>
+<p>The file for production environment - <code>./docs/PROD.md</code> (the terraform code for production is in the <code>./PROD/</code> folder)</p>
+<pre><code>{% include 'PROD/docs/README.md' %}
+</code></pre><p>Here is an example - a starter template how such architecture can look like</p>
+<p>Just the documentation portion:</p>
+<pre><code>➜  aaac-starter-template tree
+.
+├── CHANGELOG.md
+├── DEV
+│   └── docs
+│       └── README.md
+├── PROD
+│   └── docs
+│       └── README.md
+├── README.md
+├── UAT
+│   └── docs
+│       └── README.md
+├── docs
+│   ├── DEV.md
+│   ├── PROD.md
+│   ├── UAT.md
+│   ├── example-everything.md
+│   ├── example-minimal.md
+│   ├── example-typical.md
+│   ├── index.md
+│   ├── mkdocs
+│   │   ├── about.md
+│   │   ├── macros-demo1.md
+│   │   ├── markdown-demo.md
+│   │   └── snippet.md
+│   ├── module-demo-1.md
+│   └── module-demo-2.md
+├── document_server.sh
+├── examples
+│   ├── everything
+│   │   └── README.md
+│   ├── minimal
+│   │   └── README.md
+│   └── typical
+│       └── README.md
+├── mkdocs.yml
+├── modules
+│   ├── demo-1
+│   │   └── docs
+│   │       └── README.md
+│   └── demo-2
+│       └── docs
+│           └── README.md
+└── requirements.txt
+
+17 directories, 26 files
+</code></pre><p>This is how the navigation in the table of content looks like in the source form:</p>
+<p><img src="/img/aaac/nav-source.png" alt=""></p>
+<p>and the rendered form:</p>
+<p><img src="/img/aaac/nav-rendered.png" alt=""></p>
+<h3 id="terraform-code-organization">Terraform code organization</h3>
+<p>This topic deserves deeper discussion, but at the high level, Terraform does not care how many files is there in the &ldquo;project&rdquo;
+(which must be located in single directory), what are the file names (as long as they have <code>.tf</code> extension)
+or how is the content distributed among them.</p>
+<p>We are using our own adopted version of a naming/content allocation scheme for Terraform files that looks looks like this
+(this is an example that uses Platform library and most of the files are &ldquo;clients&rdquo; of some module):</p>
+<ul>
+<li>main.tf - the main functionality</li>
+<li>providers.tf - configuration of the AWS provider (locked version) and others</li>
+<li>version.tf - lock terraform version</li>
+<li>outputs.tf - all output produced</li>
+<li>variables.tf - declaration of all variables without default values</li>
+<li>pivotree-variables.tf - company-specific variables used for integration across sales, app services and ops</li>
+<li>locals.tf - the local definition - mainly for consistent tagging</li>
+<li>init.auto.tfvars - the predefined values of the variables with comments</li>
+<li>security-groups.tf - explicit definition of all used SG</li>
+<li>(optional) AWS-RESOURCE.net - depending on module, additional files for AWS resources (ELB, RDS, EC2 etc)</li>
+<li>docs/README.md or README.md - local documentation for this set of files only</li>
+</ul>
+<p>Here is an example of the Reference architecture repository with one module, one example and DEV environment containing
+the code for Terraform:</p>
+<pre><code>.
+├── CHANGELOG.md
+├── DEV
+│   ├── docs
+│   │   └── README.md
+│   ├── init.auto.tfvars
+│   ├── locals.tf
+│   ├── main.tf
+│   ├── outputs.tf
+│   ├── pivotree-variables.tf
+│   ├── providers.tf
+│   ├── security-groups.tf
+│   ├── variables.tf
+│   ├── version.tf
+│   └── vpc-net.tf
+├── PROD
+│   └── docs
+│       └── README.md
+├── README.md
+├── UAT
+│   └── docs
+│       └── README.md
+├── docs
+│   ├── DEV.md
+│   ├── PROD.md
+│   ├── UAT.md
+│   ├── example-everything.md
+│   ├── example-minimal.md
+│   ├── example-typical.md
+│   ├── index.md
+│   ├── mkdocs
+│   │   ├── about.md
+│   │   ├── macros-demo1.md
+│   │   ├── markdown-demo.md
+│   │   └── snippet.md
+│   ├── module-demo-1.md
+│   └── module-demo-2.md
+├── document_server.sh
+├── examples
+│   ├── everything
+│   │   └── README.md
+│   ├── minimal
+│   │   └── README.md
+│   └── typical
+│       ├── README.md
+│       ├── init.auto.tfvars
+│       ├── locals.tf
+│       ├── main.tf
+│       ├── outputs.tf
+│       ├── pivotree-variables.tf
+│       ├── providers.tf
+│       ├── security-groups.tf
+│       ├── variables.tf
+│       ├── version.tf
+│       └── vpc-net.tf
+├── mkdocs.yml
+├── modules
+│   ├── demo-1
+│   │   ├── docs
+│   │   │   └── README.md
+│   │   ├── init.auto.tfvars
+│   │   ├── locals.tf
+│   │   ├── main.tf
+│   │   ├── outputs.tf
+│   │   ├── pivotree-variables.tf
+│   │   ├── providers.tf
+│   │   ├── security-groups.tf
+│   │   ├── variables.tf
+│   │   ├── version.tf
+│   │   └── vpc-net.tf
+│   └── demo-2
+│       └── docs
+│           └── README.md
+└── requirements.txt
+
+17 directories, 56 files
+
+
+</code></pre><h3 id="repository-layout---or-what-belongs-where">Repository layout - or what belongs where</h3>
+<p>At this stage, we have quite a few folders or locations, both for the documentation as well as for the Terraform source code,
+so the natural question is: what should be placed where.</p>
+<p>There are several ways how to address this, but the most important rule that should be kept in mind is:</p>
+<ul>
+<li>pick ONE strategy that works for your process/way of thinking</li>
+<li>document it</li>
+<li>stick to it</li>
+</ul>
+<p>Here is what we are currently at:</p>
+<p>First: <code>modules</code>. This folder is often empty and when it is not empty, it should contain <strong>internal modules</strong>. These are reusable
+ways how to build part of the solution from other modules (public or private) or from resources. These are potential incubators for
+the new library modules. It is very important to pay attention to variables and outputs of the module, as these will determine its
+usability.</p>
+<p>The documentation of the module should focus on details about variables (module parameters) and module outputs, default
+values as well as contain examples of what gets built.</p>
+<p>Next: <code>examples</code>. This is the core of Architecture as a Code - both on code as well as on documentation side. If there are
+variants of the architecture, there should be examples for each. An example is like a build for a non-existing project or a
+fictional customer. Examples should have good names and their documentation should describe the use case and decision criteria
+when the example is a good solution. At minimum, there should be 3 examples, named <code>minimal</code>, <code>everything</code> and <code>typical</code>.</p>
+<p>If the architecture repository contains internal modules, there should be enough examples for each module.</p>
+<p>Last - the <code>environment</code> folders - UAT, PROD, DEV - should contain adapted examples of the build for a particular project.
+These are (from architecture point of view) transient folders as they will &ldquo;grow and die&rdquo; many times during the architecture lifecycle.</p>
+<h2 id="reference-architecture-lifecycle">Reference Architecture Lifecycle</h2>
+<p>The main purpose of reference architecture is to support reuse and consistency between repetitive builds of the environments,
+while providing an easier way to extract changes, updates and best practices related to environment/cloud and tools evolution.</p>
+<p>The simplest approach is to start a new build with a detached copy of the latest version of a RA repository. This is very easy and fast
+but makes later consolidation harder and usually results in consolidation never happens. At the end, there is set of snowflake
+repositories with no easy way to compare them or see their evolution path.</p>
+<p>Better approach is using 2 repositories: a Project repository and an Architecture repo.</p>
+<p>Start with shallow cloning of the Architecture repository using <code>architecture</code> as origin name:</p>
+<pre><code>git clone --depth=1 --origin architecture ARCHITECTURE_REPO_URL
+</code></pre><p>Then create empty repository for the project in the Bitbucket/Github/Gitlab and add it as remote repository to the architecture clone:</p>
+<pre><code>git remote add origin PROJECT_REPO_URL
+</code></pre><p>The starting point of the new environments will be the current (<code>develop</code>) state of the architecture repo. Let&rsquo;s assume the project name
+is RA_DEMO.</p>
+<p>We will be working with multiple local branches that will be synchronized with the remote branches in these two repositories:</p>
+<pre><code>develop =&gt; origin/develop - environment definition in progress
+master  =&gt; origin/master  - environment release state
+RA_DEMO =&gt; architecture/PROJECTS/RA_DEMO
+</code></pre><p>To set it up:</p>
+<pre><code>git checkout master
+git push -u origin/master
+
+git checkout -b develop
+git merge archirecture/develop
+git push -u origin/develop
+
+git checkout -b RA_DEMO
+git push -u architecture/PROJECTS/RA_DEMO
+
+</code></pre><p>Main work will be happening in the develop branch, pushing the changes to origin/develop.</p>
+<p>This means creating folders for ENV, adding Terraform code and documentation, testing documentation locally,
+running the code and adjusting.</p>
+<p>When the environment and documentation reaches tested state, we merge to master and push to project repository, where (eventually)
+the CI/DC pipelines will run and deploy the infrastructure.</p>
+<p>Important thing to keep in mind is avoiding reformatting and large content re-arrangement which would complicate the next phase.</p>
+<p>When the environment is ready, we may end up with some changes or additions under <code>./modules</code> or <code>./examples</code> that are worthy of keeping as
+part of next builds based on this reference architecture. This is where the reintegration step comes into place.</p>
+<h3 id="reintegration---project-side">Reintegration - project side</h3>
+<p>The goal of this phase is to make sure that worthy additions and improvements will be kept for the future builds.</p>
+<p>It starts all by switching to <code>RA_DEMO</code> branch and merging the state we need to integrate:</p>
+<pre><code>git checkout RA_DEMO
+git merge master
+</code></pre><p>Usually, the details of the build environment are of little interest for the architecture. We can remove the ENV folders, add more
+documentation or better details while working on the RA_DEMO branch, producing one or more commits on this branch. All this commit
+should be local commits - do NOT push to <code>architecture</code> yet. Sometimes we may want to consider making a ENV build a new example</p>
+<ul>
+<li>copy the TF code under <code>./examples</code>, name it accordingly and update documentation / remove customer specific data.</li>
+</ul>
+<p>Sometimes we discover issues that should be addressed on the architecture level. Adding them to <code>backlog.md</code> is great way that they will
+be available for the maintainer of the RA repo.</p>
+<p>When the state of the architecture is in desired state, we can squeeze the commits to single commit using interactive rebase (see <a href="https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History">this</a> for more details)</p>
+<p>After rebase, we can push the RA_DEMO to architecture remote:</p>
+<pre><code>git push 
+</code></pre><p>and create a pull request for Architecture repo, to merge the PROJECT/RA_DEMO to develop.</p>
+<h3 id="reintegration---architecture-side">Reintegration - architecture side</h3>
+<p>Second part of the reintegration happens completely in the Architecture repo, often by different person / team.</p>
+<p>Clone the Architecture repo, switch to newly added PROJECT/RA_DEMO branch, review the addition.</p>
+<p>Every change should be tested and independently validated. Ideally the architecture team adds dedicated tests for the new
+examples and more documentation, reviews backlog.md for list of issues / improvements suggested and creates tickets based on
+this information.</p>
+<p>If everything is OK, increase version of the RA and merge to develop - to make it available for next iteration.</p>
+<p>The starter template of the reference architecture using the above approach is available at <a href="https://github.com/thinkwrap/aaac-starter-template">Pivotree Opensource Github</a></p>
+<h2 id="roi-consideration">ROI consideration</h2>
+<p>Creation and maintenance of the reference architecture is a non-trivial investment of time and resource. Not always this kind
+of effort is warranted. From our experience, here are some decision criteria when considering standardization and using this approach:</p>
+<ul>
+<li>how many environments will be created during the next month / quarter ? RA and AaaC is less useful for small number of builds over longer periods
+of time</li>
+<li>what is the platform complexity ? For highly complex platforms with complex dependencies and long implementation cycle, it makes more sense focus on smaller building blocks
+rather than on full RA</li>
+<li>what is the speed of change for the platform ? Every major release (and often minor release as well) will require updating and re-testing the RA.
+For fast changing environment, this can be too expensive</li>
+<li>what is the customer requirements variability ? If there are huge differences between the builds, the RA will need to contain large number
+of examples and variants which will make maintenance and testing more costly.</li>
+</ul>
+<p>The ideal candidates for the AaaC / RA DevOps cycle are small to medium sized solutions with small number of variants, with
+customers requirements being similar enough to fit into 3-4 cases and with large enough number of deployments for a platform
+version that allows good test coverage.</p>
+<h2 id="diagrams-markdown-friendly-way">Diagrams Markdown Friendly Way</h2>
+<p>The traditional way how to create diagram and add them to the documentation is:</p>
+<ul>
+<li>use an external tool - either a local one (Omnigraffle, Visio) or an online tool (LucidChart, Draw.IO)</li>
+<li>save source of the diagram somewhere (local drive or cloud)</li>
+<li>export the image rendering of the diagram to some image format (e.g. PNG)</li>
+<li>link the image to your documentation</li>
+</ul>
+<p>While this is easy and convenient way of doing things with very low barrier of entry, there are several disadvantage I&rsquo;d like to point out</p>
+<ul>
+<li>one must have the same version of editing software - on a proper platform if local. The challenges of sharing Omnigrafle source with Windows users (or Visio with Linux users) are non-trivial. For online tools, one must have access / license to the software.</li>
+<li>the native format is not living in the same place as the documentation - unless one uses local tools (which brings platform dependency) and life cycles of the documentation and diagrams are separate. This violates the original intention of keeping lifecycle of code and documentation together, and diagrams are fundamental part of the documentation</li>
+<li>native format is impossible to properly version control. As a consequence of the previous point, there is no easy way to tell differences between various versions of the diagram from the source and image.</li>
+<li>it is very hard to automate the rendering part to get e.g. different resolutions of the images for different media</li>
+</ul>
+<h2 id="binary-editor-alternatives">Binary Editor Alternatives</h2>
+<p>I&rsquo;d like to showcase / demo two alternatives to visual GUI editors that essentially apply the same idea as Terraform to infrastructure to the process of creating diagrams. Instead of using GUI editor (~ AWS Console) you describe the intended diagram (~ infrastructure) in an open, free Domain Specific Language PlantUML (~ Terraform) and use free, opensource and readily available tools to transform the DSL to target assets - images (~ resources). This is the approach using PlantUML</p>
+<h3 id="plantuml-diagrams">PlantUML diagrams</h3>
+<p>The <a href="https://en.wikipedia.org/wiki/PlantUML">PlantUML</a> is <a href="https://plantuml.com/">well established DSL</a> with great ecosystem and support. It allows creating wide variety of diagrams and converting them either <a href="http://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000">online</a> or in <a href="https://hub.docker.com/r/plantuml/plantuml-server/">Docker</a> or using <a href="https://plugins.jetbrains.com/plugin/7017-plantuml-integration">plugin for IDE</a></p>
+<p>There is also <a href="https://plantuml.com/stdlib">standard library of modules</a> including AWS and excellent <a href="https://crashedmind.github.io/PlantUMLHitchhikersGuide/">guide</a> with examples and details</p>
+<p>Here is a quick demo of few examples what can be done with PlatUML</p>
+<h3 id="aws-with-plantuml">AWS with PlantUML</h3>
+<pre><code class="language-puml" data-lang="puml">@startuml
+!include &lt;awslib/AWSCommon&gt;
+!include &lt;awslib/AWSSimplified.puml&gt;
+!include &lt;awslib/Compute/all.puml&gt;
+!include &lt;awslib/mobile/all.puml&gt;
+!include &lt;awslib/general/all.puml&gt;
+!include &lt;awslib/GroupIcons/all.puml&gt;
+
+ skinparam linetype polyline
+' skinparam linetype ortho
+
+package &quot;AWS Cloud&quot; {
+EC2(Smadex, &quot;Smadex Service&quot;, &quot; &quot;)
+}
+
+Users(Users, &quot;Users&quot;, &quot; &quot;)
+TraditionalServer(AdExchange, &quot;Ad Exchange&quot;, &quot; &quot;)
+Mobile(Mobile, &quot;Publisher app or web&quot;, &quot; &quot;)
+
+Users -down-&gt; Mobile: 1. Visits
+Mobile -right-&gt; AdExchange: 2. Start auction
+AdExchange -right-&gt; Smadex: 3. Bid request / response
+Smadex -left-&gt; Mobile: 4. Show Ad
+Users -right-&gt; Smadex: 5. Impression / click / install / event {request id}
+@enduml
+</code></pre><p><img src="/img/aaac/aws_demo_1.png" alt=""></p>
+<pre><code class="language-puml" data-lang="puml">@startuml
+!include &lt;awslib/AWSCommon&gt;
+!include &lt;awslib/AWSSimplified.puml&gt;
+!include &lt;awslib/Compute/all.puml&gt;
+!include &lt;awslib/mobile/all.puml&gt;
+!include &lt;awslib/general/all.puml&gt;
+!include &lt;awslib/GroupIcons/all.puml&gt;
+!include &lt;awslib/Storage/all.puml&gt;
+!include &lt;awslib/ManagementAndGovernance/all.puml&gt;
+!include &lt;awslib/CustomerEngagement/all.puml&gt;
+!include &lt;awslib/MachineLearning/all.puml&gt;
+!include &lt;awslib/NetworkingAndContentDelivery/all.puml&gt;
+!include &lt;awslib/Database/all.puml&gt;
+!include &lt;awslib/ApplicationIntegration/all.puml&gt;
+
+'Compute/General
+'Storage/SimpleStorageServiceS3.png
+'ApplicationIntegration/SQS.png
+'Compute/Lambda.png
+'Compute/EC2
+'ManagementAndGovernance/CloudWatch.png
+'CustomerEngagement/SESEmail.png
+'MachineLearning/SageMaker.png
+''Mobile/APIGateway.png
+'NetworkingAndContentDelivery/APIGateway2.png
+'Database/Aurora.png
+'ApplicationIntegration/SQSQueue.png
+
+
+skinparam linetype polyline
+' skinparam linetype ortho
+
+'top left section
+'-------------------------------------------------------------
+package EC2_Instance {
+General(IngestionApp, &quot;Ingestion App&quot;, &quot; &quot;)
+General(ChunkingApp, &quot;Chunking Orchestration App&quot;, &quot; &quot;)
+}
+
+SimpleStorageServiceS3(S3Staging, &quot;Amazon S3 Staging Bucket&quot;, &quot; &quot;)
+SQS(SQSIngest, &quot;Amazon SQS Ingest Queue&quot;, &quot; &quot;)
+
+Lambda(LambdaTrigger, &quot;AWS Lambda Trigger Function&quot;, &quot; &quot;)
+
+LambdaTrigger -up-&gt; IngestionApp
+IngestionApp -up-&gt; SQSIngest
+SQSIngest -down-&gt; ChunkingApp
+S3Staging &lt;-down-&gt; EC2_Instance
+
+'top right section
+'-------------------------------------------------------------
+together {
+SQS(SQSLargeFileQueue, &quot;Amazon SQS Large File Queue&quot;, &quot; &quot;)
+SQS(SQSSmallFileQueue, &quot;Amazon SQS Small File Queue&quot;, &quot; &quot;)
+SQS(SQSSingleFileQueue, &quot;Amazon SQS Single File Queue&quot;, &quot; &quot;)
+
+EC2(LargeFileChunkingAppEC2, &quot;Large File Chunking App on EC2&quot;, &quot; &quot;)
+Lambda(LambdaSmallFileChunking, &quot;Small File Chunking Lambda&quot;, &quot; &quot;)
+Lambda(ImageConversionLambdaFunction, &quot;Image Conversion Lambda Function&quot;, &quot; &quot;)
+}
+'todo dashed line boundary
+package DLQ {
+SQSQueue(DLQ1, &quot;DLQ&quot;, &quot; &quot;)
+SQSQueue(DLQ2, &quot;DLQ&quot;, &quot; &quot;)
+SQSQueue(DLQ3, &quot;DLQ&quot;, &quot; &quot;)
+}
+
+ChunkingApp -right-&gt; SQSLargeFileQueue
+ChunkingApp -right-&gt; SQSSmallFileQueue
+ChunkingApp -right-&gt; SQSSingleFileQueue
+
+SQSLargeFileQueue -right-&gt; LargeFileChunkingAppEC2
+LargeFileChunkingAppEC2 -down-&gt; SQSSmallFileQueue
+SQSSmallFileQueue -right-&gt; LambdaSmallFileChunking
+LambdaSmallFileChunking -down-&gt; SQSSingleFileQueue
+SQSSingleFileQueue -right-&gt; ImageConversionLambdaFunction
+
+'todo dashed line
+SQSLargeFileQueue -down-&gt; DLQ1
+SQSSmallFileQueue -down-&gt; DLQ2
+SQSSingleFileQueue -down-&gt; DLQ3
+
+
+'bottom right section
+'-------------------------------------------------------------
+
+SimpleStorageServiceS3(S3Images, &quot;Amazon S3 Images Bucket&quot;, &quot; &quot;)
+EC2(EC2DLQFailsafeApp, &quot;DLQ Failsafe App on EC2&quot;, &quot; &quot;)
+SQS(SQSConvertedImageQueue, &quot;Amazon SQS Converted Image Queue&quot;, &quot; &quot;)
+Lambda(LambdaInferenceInvocation, &quot;Inference Invocation Lambda Function&quot;, &quot; &quot;)
+Aurora(Aurora, &quot;Amazon Aurora&quot;, &quot; &quot;)
+APIGateway(AmazonAPIGateway, &quot;Amazon API Gateway&quot;, &quot;&quot;)
+SageMaker(AmazonSageMaker, &quot;Amazon SageMaker Endpoint&quot;, &quot;&quot;)
+
+DLQ1 -down-&gt; EC2DLQFailsafeApp
+DLQ2 -down-&gt; EC2DLQFailsafeApp
+DLQ3 -down-&gt; EC2DLQFailsafeApp
+
+EC2DLQFailsafeApp -right-&gt; S3Images
+
+ImageConversionLambdaFunction -down-&gt; S3Images
+S3Images -down-&gt; SQSConvertedImageQueue
+SQSConvertedImageQueue -left-&gt; LambdaInferenceInvocation
+LambdaInferenceInvocation -down-&gt; Aurora
+LambdaInferenceInvocation &lt;-left-&gt; AmazonAPIGateway
+AmazonAPIGateway &lt;-left-&gt; AmazonSageMaker
+
+
+'bottom left section
+'-------------------------------------------------------------
+
+CloudWatch(CloudWatch, &quot;Amazon Cloudwatch&quot;, &quot; &quot;)
+SNS(SNS1, &quot;Amazon SNS&quot;, &quot;&quot;)
+SESEmail(SESEmail, &quot;Email Notification&quot;, &quot;&quot;)
+
+CloudWatch -right-&gt; DLQ
+CloudWatch -left-&gt; SNS1
+SNS1 -left-&gt; SESEmail
+
+footer %filename() rendered with PlantUML version %version()\nThe Hitchhiker’s Guide to PlantUML
+@enduml
+</code></pre><p>( or see the source: ) - <a href="img/aaac/aws-demo-2.puml">source PUML</a>
+<img src="/img/aaac/aws_demo2_2.png" alt=""></p>
+<h3 id="workflow-with-plantuml">Workflow with PlantUML</h3>
+<p>Using PlantUML for diagrams is pretty straightforward. Assuming that you have installed <a href="https://plugins.jetbrains.com/plugin/7017-plantuml-integration">plugin</a> simply add the file with PUML extension to the project. It will be recognized and PyCharm/IntelliJ will show colored syntax with preview:</p>
+<p><img src="/img/aaac/screenshot-plugin.png" alt=""></p>
+<p>After creating the desired image, use the plugin save button to generate PNG version of the diagram and add it to the project - ideally same folder as the PUML file.</p>
+<p><img src="/img/aaac/plugin-save.png" alt=""></p>
+<p>Including the sources into documentation is very simple: you can either embedd the full source or provide link to it</p>
+<p><img src="/img/aaac/include-source.png" alt=""></p>
+<h3 id="pure-python-as-graph-dsl">Pure Python as graph DSL</h3>
+<p>Recently I have discovered different approach to specifying diagrams in a source code friendly manner. There is an open source project <a href="https://diagrams.mingrammer.com/">diagrams</a> - see also <a href="https://github.com/mingrammer/diagrams">github</a>. Good introduction to this approach is <a href="https://medium.com/swlh/infrastructure-diagrams-as-code-is-it-possible-b6bbae487f21">this blog</a>.</p>
+<p>It is elegant and beautiful.</p>
+<p>From this:
+<img src="https://diagrams.mingrammer.com/img/message_collecting_code.png" alt=""></p>
+<p>generates this</p>
+<p><img src="https://diagrams.mingrammer.com/img/message_collecting_diagram.png" alt=""></p>
+
+</article>
+
+		</main>
+		
+				<div class="hide-print sans-serif f6 f5-l mt5 ph3 pb6 center nested-copy-line-height lh-copy nested-links mw-100 measure-wide">
+		<div class="about-the-author">
+		
+			
+			
+				
+					<p><img src="/img/miro.adamy.jpg" alt="Miro"></p>
+<p>Miro Adamy is a DevOps/Cloud engineer, working for <a href="https://pivotree.com">Pivotree</a> on designing and creating cloud systems infrastructure. He enjoys reading books, surfing Web, walking, thinking and occasionally writing on various topics here and <a href="https://www.miroadamy.com">elsewhere</a></p>
+
+				
+			
+		
+		</div>
+		
+	</div>
+
+		
+		
+		
+		<footer class="hide-print sans-serif f6 fw1 bg-black near-white bottom-0 w-100 pa3" role="contentinfo">
+			<p class="w-50 fr tr">
+			<a class="no-underline near-white" href="https://github.com/xaprb/story"><img class="dib" title="Made with Hugo and Story" alt="Story logo" src="https://blog.pivotree.cloud/img/story-logo-white.svg" style="width: 1.5rem; height: 1.5rem" /></a>
+			</p>
+			<p class="w-50 near-white">
+				&copy; 2021 Pivotree Team
+			</p>
+		</footer>
+		
+	
+	
+	</body>
+</html>

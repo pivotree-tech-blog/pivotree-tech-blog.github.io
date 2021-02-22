@@ -1,0 +1,132 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Pivotree Cloud Technology Blog - POC </title>
+		<link>https://blog.pivotree.cloud/mailchimp/index.xml</link>
+		<generator>Hugo -- gohugo.io</generator>
+		<language>en-us</language>
+		<author>Pivotree Team</author>
+		<rights>Copyright (c) 2021</rights>
+		<updated>0001-01-01 00:00:00 &#43;0000 UTC</updated>
+		
+		<item>
+			<title>How to monitor Bitbucket user and group permissions with API</title>
+			<link>https://blog.pivotree.cloud/2021-02-18-bitbucket-user-groups/</link>
+			<pubDate>Thu, 18 Feb 2021 13:00:00 &#43;0800</pubDate>
+			<author>Pivotree Team</author>
+			<guid>https://blog.pivotree.cloud/2021-02-18-bitbucket-user-groups/</guid>
+			<media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pivotree.cloud/img/tomas-malik-TCJM2dF7FLM-unsplash.tn-500x500.jpg" medium="image" type="image/jpg" width="100" height="100" />
+			<description>Using command line tool to access Bitbucket API - 3&lt;!-- raw HTML omitted --&gt;How to manage users and groups in Bitbucket Use case:
+I want to maintain users and groups and their access to repositories in an organization in Bitbucket. To make sure I do not miss newly changed admin access, I want to use the Bitbucket API to retrieve the list of permissions on repository basis and on user/group bases.
+Setup Bitbucket requires a username and password to access the API. This information is stored in environment variables BBUSER and BBPASSWORD.</description>
+		</item>
+		
+		<item>
+			<title>How to mirror Github and Bitbucket repositories</title>
+			<link>https://blog.pivotree.cloud/2021-02-17-mirroring-repos/</link>
+			<pubDate>Wed, 17 Feb 2021 13:00:00 &#43;0800</pubDate>
+			<author>Pivotree Team</author>
+			<guid>https://blog.pivotree.cloud/2021-02-17-mirroring-repos/</guid>
+			<media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pivotree.cloud/img/polina-kuzovkova-L452YQvckJQ-unsplash.tn-500x500.jpg" medium="image" type="image/jpg" width="100" height="100" />
+			<description>Using Bitbucket and Github API to mirror repositories&lt;!-- raw HTML omitted --&gt;Mirroring large number of GitHub or Bitbucket repositories Use case:
+I want to create local clone of a large number of repositories from an organization in GitHub / Bitbucket.
+Assumptions  user has SSH key registered with the GH / BB - can clone using ssh protocol user has successfully cloned at least one repo from command line before (the /etc/hosts contains host entries for BB and GH) user has modern version of Python 3 installed (3.</description>
+		</item>
+		
+		<item>
+			<title>How to list Github repositories and users</title>
+			<link>https://blog.pivotree.cloud/2021-02-16-github-list-repos/</link>
+			<pubDate>Tue, 16 Feb 2021 13:00:00 &#43;0800</pubDate>
+			<author>Pivotree Team</author>
+			<guid>https://blog.pivotree.cloud/2021-02-16-github-list-repos/</guid>
+			<media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pivotree.cloud/img/dan-meyers-PB_B76Ps14Y-unsplash.tn-500x500.jpg" medium="image" type="image/jpg" width="100" height="100" />
+			<description>Using command line tool to access Github/Bitbucket API - 2&lt;!-- raw HTML omitted --&gt;How to list repositories in GitHub Use Case:
+I want to maintain repositories in an organization in GitHub. To make sure I do not miss newly added ones, I want to use API access to retrieve the list of repositories in the organization.
+Setup GitHub requires a token to access the API. This token is stored in an environment variable github_token and can be generated in the user profile section - settings - developer settings.</description>
+		</item>
+		
+		<item>
+			<title>How to list Bitbucket repositories and users</title>
+			<link>https://blog.pivotree.cloud/2021-02-15-bitbucket-list-repos/</link>
+			<pubDate>Mon, 15 Feb 2021 13:00:00 &#43;0800</pubDate>
+			<author>Pivotree Team</author>
+			<guid>https://blog.pivotree.cloud/2021-02-15-bitbucket-list-repos/</guid>
+			<media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pivotree.cloud/img/liam-shaw-w6_OGAdxDj8-unsplash.tn-500x500.jpg" medium="image" type="image/jpg" width="100" height="100" />
+			<description>Using command line tool to access Bitbucket API - 1&lt;!-- raw HTML omitted --&gt;How to list repositories in Bitbucket Use case:
+I want to maintain repositories in an organization in Bitbucket. To make sure I do not miss newly added ones, I want to use API access to retrieve the list of all repositories in the organization.
+Setup Bitbucket requires a username and password to access the API. This information is stored in the environment variables BBUSER and BBPASSWORD. The BBPASSWORD should be an access token / app password defined in the App passwords section of the user settings:</description>
+		</item>
+		
+		<item>
+			<title>Documentation with Auth0 and Gatsby</title>
+			<link>https://blog.pivotree.cloud/2020-11-24-documentation-gatsby/</link>
+			<pubDate>Tue, 24 Nov 2020 13:00:00 &#43;0800</pubDate>
+			<author>Pivotree Team</author>
+			<guid>https://blog.pivotree.cloud/2020-11-24-documentation-gatsby/</guid>
+			<media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pivotree.cloud/img/unsplash-photos-vHnVtLK8rCc.tn-500x500.jpg" medium="image" type="image/jpg" width="100" height="100" />
+			<description>Publishing internal documentation with authentication using Gatsby framework and Auth0&lt;!-- raw HTML omitted --&gt;Background With modern technologies and available Frameworks, we have successfully eliminated the complexities involved in building an end to end Application and have eased the entire development and deployment process to a great extent. As we finish writing the Application and our next goal is to publish it as an open source project or push it to production, a major component that will make the code more appealing and useful is having a proper documentation about the nitty-gritty involved in the development process.</description>
+		</item>
+		
+		<item>
+			<title>Documenting multi-repository projects</title>
+			<link>https://blog.pivotree.cloud/2020-11-23-documentation-multi-repo/</link>
+			<pubDate>Mon, 23 Nov 2020 13:00:00 &#43;0800</pubDate>
+			<author>Pivotree Team</author>
+			<guid>https://blog.pivotree.cloud/2020-11-23-documentation-multi-repo/</guid>
+			<media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pivotree.cloud/img/griffin-keller--mNvCsNlsSE-unsplash2.tn-500x500.jpg" medium="image" type="image/jpg" width="100" height="100" />
+			<description>Documentation best practices, tools and techniquest for cloud-native multi-repository projects&lt;!-- raw HTML omitted --&gt;This blog post is a de-powerpointized version of a brownbag session in Pivotree. The goal was to increase awareness of tools and techniques for information / knowledge capture in the projects, specifically focusing on producing quality documentation so that everybody in project can access it and contribute to it, not only developers. We wanted to look at the tools that would allow engineers keep using their tools of trade (without impact on developer’s productivity) and at the same time make the information available without duplication of work to increase re-findability of information.</description>
+		</item>
+		
+		<item>
+			<title>Reference Architecture as a Code</title>
+			<link>https://blog.pivotree.cloud/2020-08-07-architecture-as-a-code/</link>
+			<pubDate>Mon, 10 Aug 2020 13:00:00 &#43;0800</pubDate>
+			<author>Pivotree Team</author>
+			<guid>https://blog.pivotree.cloud/2020-08-07-architecture-as-a-code/</guid>
+			<media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pivotree.cloud/img/unsplash-photos-5mZ_M06Fc9g.tn-500x500.jpg" medium="image" type="image/jpg" width="100" height="100" />
+			<description>Version control friendly approach to designing and documenting the architecture&lt;!-- raw HTML omitted --&gt;Many shapes of Architecture According to the wise people, an architecture is the shared understanding that the expert developers/system builders/maintainers have of the system design. It’s purpose is to maximize the probability that the decisions you have to make early in a project are the right ones. It is sort of a blueprint for the future system and captures parts, relations, boundaries, constraints.
+In our business (we build and run environments and solutions for eCommerce, data management and other business activities of our customers), an important subtype of architecture is Reference Architecture.</description>
+		</item>
+		
+		<item>
+			<title>Building an ATG autoscaling solution</title>
+			<link>https://blog.pivotree.cloud/2020-07-01-oc-autoscaling/</link>
+			<pubDate>Fri, 10 Jul 2020 13:00:00 &#43;0800</pubDate>
+			<author>Pivotree Team</author>
+			<guid>https://blog.pivotree.cloud/2020-07-01-oc-autoscaling/</guid>
+			<media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pivotree.cloud/img/unsplash-photos-nehfi_SfqtU.tn-500x500.jpg" medium="image" type="image/jpg" width="100" height="100" />
+			<description>Developing an autoscaling solution for ATG&lt;!-- raw HTML omitted --&gt;The Challenge Pivotree had a client who wanted to autoscale ATG application servers under certain conditions. The challenge was that previously servers were provisioned and built up based on requirements and were static. Server configurations were baked into the ear and called using jvm args. Any platform integration was all done manually and it could take several days to weeks to complete a build out.
+The client had been previously migrated to AWS cloud but at the time it was a basic lift and shift with the environment deployed using terraform and then built and managed manually.</description>
+		</item>
+		
+		<item>
+			<title>DockerCon 2020</title>
+			<link>https://blog.pivotree.cloud/2020-05-30-dockercon-2020/</link>
+			<pubDate>Sat, 30 May 2020 11:22:48 &#43;0800</pubDate>
+			<author>Pivotree Team</author>
+			<guid>https://blog.pivotree.cloud/2020-05-30-dockercon-2020/</guid>
+			<media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pivotree.cloud/img/unsplash-photos-o-ubWHV29Uk.tn-500x500.jpg" medium="image" type="image/jpg" width="100" height="100" />
+			<description>Notes from 2020&amp;rsquo;s Online Event - DockerCon live. Links to selected presentations and related content</description>
+		</item>
+		
+		<item>
+			<title>Talks - template </title>
+			<link>https://blog.pivotree.cloud/talks/</link>
+			<pubDate>Fri, 01 May 2020 09:50:00 -0700</pubDate>
+			<author>Pivotree Team</author>
+			<guid>https://blog.pivotree.cloud/talks/</guid>
+			<media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pivotree.cloud/img/default-header-img.tn-500x500.jpg" medium="image" type="image/jpg" width="100" height="100" />
+			<description>%!s(&lt;!-- raw HTML omitted --&gt;)&lt;!-- raw HTML omitted --&gt;Coming soon …</description>
+		</item>
+		
+		<item>
+			<title>Version information and Credits</title>
+			<link>https://blog.pivotree.cloud/version/status/</link>
+			<pubDate>Fri, 01 May 2020 00:00:00 UTC</pubDate>
+			<author>Pivotree Team</author>
+			<guid>https://blog.pivotree.cloud/version/status/</guid>
+			<media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://blog.pivotree.cloud/img/default-header-img.tn-500x500.jpg" medium="image" type="image/jpg" width="100" height="100" />
+			<description>%!s(&lt;!-- raw HTML omitted --&gt;)&lt;!-- raw HTML omitted --&gt; Hugo version: 0.68.3 Pygments version 2.2.0, (c) 2006-2017 by Georg Brandl. Blog commit: 4a0b42b1594f058a8bea236f318d049287863dc1 Theme commit: 3690f2fcafb4220fba13467dca26282b448cb3da Deployed on: “2021-02-22T12:46:16Z”</description>
+		</item>
+		
+	</channel>
+</rss>

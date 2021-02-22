@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Version Info on Pivotree Cloud Technology Blog - POC</title>
+    <link>https://blog.pivotree.cloud/version/</link>
+    <description>Recent content in Version Info on Pivotree Cloud Technology Blog - POC</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 01 May 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.pivotree.cloud/version/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Version information and Credits</title>
+      <link>https://blog.pivotree.cloud/version/status/</link>
+      <pubDate>Fri, 01 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/version/status/</guid>
+      <description> Hugo version: 0.68.3 Pygments version 2.2.0, (c) 2006-2017 by Georg Brandl. Blog commit: 4a0b42b1594f058a8bea236f318d049287863dc1 Theme commit: 3690f2fcafb4220fba13467dca26282b448cb3da Deployed on: &amp;ldquo;2021-02-22T12:46:16Z&amp;rdquo;  </description>
+    </item>
+    
+  </channel>
+</rss>

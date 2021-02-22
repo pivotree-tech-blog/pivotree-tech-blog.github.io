@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ATG on Pivotree Cloud Technology Blog - POC</title>
+    <link>https://blog.pivotree.cloud/tags/atg/</link>
+    <description>Recent content in ATG on Pivotree Cloud Technology Blog - POC</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 10 Jul 2020 13:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.pivotree.cloud/tags/atg/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Building an ATG autoscaling solution</title>
+      <link>https://blog.pivotree.cloud/2020-07-01-oc-autoscaling/</link>
+      <pubDate>Fri, 10 Jul 2020 13:00:00 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/2020-07-01-oc-autoscaling/</guid>
+      <description>The Challenge Pivotree had a client who wanted to autoscale ATG application servers under certain conditions. The challenge was that previously servers were provisioned and built up based on requirements and were static. Server configurations were baked into the ear and called using jvm args. Any platform integration was all done manually and it could take several days to weeks to complete a build out.
+The client had been previously migrated to AWS cloud but at the time it was a basic lift and shift with the environment deployed using terraform and then built and managed manually.</description>
+    </item>
+    
+  </channel>
+</rss>

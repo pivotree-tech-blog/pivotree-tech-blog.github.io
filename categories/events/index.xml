@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>events on Pivotree Cloud Technology Blog - POC</title>
+    <link>https://blog.pivotree.cloud/categories/events/</link>
+    <description>Recent content in events on Pivotree Cloud Technology Blog - POC</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sat, 30 May 2020 11:22:48 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.pivotree.cloud/categories/events/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>DockerCon 2020</title>
+      <link>https://blog.pivotree.cloud/2020-05-30-dockercon-2020/</link>
+      <pubDate>Sat, 30 May 2020 11:22:48 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/2020-05-30-dockercon-2020/</guid>
+      <description>&lt;p&gt;Notes from 2020&amp;rsquo;s Online Event - DockerCon live.&lt;/p&gt;
+&lt;p&gt;Links to selected presentations and related content.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

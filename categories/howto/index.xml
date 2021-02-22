@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>HowTo on Pivotree Cloud Technology Blog - POC</title>
+    <link>https://blog.pivotree.cloud/categories/howto/</link>
+    <description>Recent content in HowTo on Pivotree Cloud Technology Blog - POC</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 18 Feb 2021 13:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.pivotree.cloud/categories/howto/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How to monitor Bitbucket user and group permissions with API</title>
+      <link>https://blog.pivotree.cloud/2021-02-18-bitbucket-user-groups/</link>
+      <pubDate>Thu, 18 Feb 2021 13:00:00 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/2021-02-18-bitbucket-user-groups/</guid>
+      <description>How to manage users and groups in Bitbucket Use case:
+I want to maintain users and groups and their access to repositories in an organization in Bitbucket. To make sure I do not miss newly changed admin access, I want to use the Bitbucket API to retrieve the list of permissions on repository basis and on user/group bases.
+Setup Bitbucket requires a username and password to access the API. This information is stored in environment variables BBUSER and BBPASSWORD.</description>
+    </item>
+    
+    <item>
+      <title>How to mirror Github and Bitbucket repositories</title>
+      <link>https://blog.pivotree.cloud/2021-02-17-mirroring-repos/</link>
+      <pubDate>Wed, 17 Feb 2021 13:00:00 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/2021-02-17-mirroring-repos/</guid>
+      <description>Mirroring large number of GitHub or Bitbucket repositories Use case:
+I want to create local clone of a large number of repositories from an organization in GitHub / Bitbucket.
+Assumptions  user has SSH key registered with the GH / BB - can clone using ssh protocol user has successfully cloned at least one repo from command line before (the /etc/hosts contains host entries for BB and GH) user has modern version of Python 3 installed (3.</description>
+    </item>
+    
+    <item>
+      <title>How to list Github repositories and users</title>
+      <link>https://blog.pivotree.cloud/2021-02-16-github-list-repos/</link>
+      <pubDate>Tue, 16 Feb 2021 13:00:00 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/2021-02-16-github-list-repos/</guid>
+      <description>How to list repositories in GitHub Use Case:
+I want to maintain repositories in an organization in GitHub. To make sure I do not miss newly added ones, I want to use API access to retrieve the list of repositories in the organization.
+Setup GitHub requires a token to access the API. This token is stored in an environment variable github_token and can be generated in the user profile section - settings - developer settings.</description>
+    </item>
+    
+    <item>
+      <title>How to list Bitbucket repositories and users</title>
+      <link>https://blog.pivotree.cloud/2021-02-15-bitbucket-list-repos/</link>
+      <pubDate>Mon, 15 Feb 2021 13:00:00 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/2021-02-15-bitbucket-list-repos/</guid>
+      <description>How to list repositories in Bitbucket Use case:
+I want to maintain repositories in an organization in Bitbucket. To make sure I do not miss newly added ones, I want to use API access to retrieve the list of all repositories in the organization.
+Setup Bitbucket requires a username and password to access the API. This information is stored in the environment variables BBUSER and BBPASSWORD. The BBPASSWORD should be an access token / app password defined in the App passwords section of the user settings:</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,27 @@
+---
+title: "One Click QA environment I"
+date: 2020-05-08T16:55:36+02:00
+draft: true
+url: "/oneclick-qa-1"
+author: Miro Adamy
+description: "One Click QA Environment Part I: what it is, what it is not and why you may want one."
+tldr: "Longer version of description - a blurb that will sum up the content of the blog post"
+credit: "https://unsplash.com/photos/o-ubWHV29Uk"
+image: "img/unsplash-photos-o-ubWHV29Uk.jpg"
+thumbnail: img/unsplash-photos-o-ubWHV29Uk.tn-500x500.jpg
+categories:
+- DevOps
+classes:
+- feature-figcaption
+- feature-figcaption-hidden
+- feature-3dbook-covers
+- feature-tablecaption
+---
+
+This blog post is about something .... 
+quick summary here
+
+<!--more-->
+Here is more text
+
+

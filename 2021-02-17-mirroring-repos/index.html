@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>How to mirror Github and Bitbucket repositories</title>
+		<link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.pivotree.cloud/index.xml">
+		<link rel="canonical" href="https://blog.pivotree.cloud/2021-02-17-mirroring-repos/">
+		
+		<link rel="shortcut icon" type="image/png" href="https://blog.pivotree.cloud/apple-touch-icon-precomposed.png">
+		<meta name="description" content="Using Bitbucket and Github API to mirror repositories">
+		
+		<meta name="generator" content="Hugo 0.68.3" />
+
+		
+		<meta property="og:title" content="How to mirror Github and Bitbucket repositories" />
+		<meta property="og:type" content="article" />
+		<meta property="og:image" content="https://blog.pivotree.cloud/img/polina-kuzovkova-L452YQvckJQ-unsplash.jpg" />
+		<meta property="og:description" content="Using Bitbucket and Github API to mirror repositories" />
+		<meta property="og:url" content="https://blog.pivotree.cloud/2021-02-17-mirroring-repos/" />
+		<meta property="og:site_name" content="How to mirror Github and Bitbucket repositories" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@TeamPivotree" />
+
+
+		
+		<link rel="stylesheet" href="https://blog.pivotree.cloud/css/tachyons.min.css" />
+		<link rel="stylesheet" href="https://blog.pivotree.cloud/css/story.css" />
+		<link rel="stylesheet" href="https://blog.pivotree.cloud/css/descartes.css" />
+		
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+		<link href="https://fonts.googleapis.com/css?family=Quattrocento+Sans:400,400i,700,700i|Quattrocento:400,700|Spectral:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
+		
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		
+		<script src="https://blog.pivotree.cloud/js/story.js"></script>
+
+	</head>
+	<body class="ma0 bg-white  page-kind-page is-page-true ">
+		
+		<header class="cover bg-top" style="background-image: url('https://blog.pivotree.cloud/img/polina-kuzovkova-L452YQvckJQ-unsplash.jpg'); background-position: center;">
+			<div class="bg-black-30 bb bt">
+
+				<nav class="hide-print sans-serif  border-box pa3 ph5-l">
+					<a href="https://blog.pivotree.cloud/" title="Home">
+						<img src="https://blog.pivotree.cloud/img/logo.jpg" class="w2 h2 br-100" alt="Pivotree Cloud Technology Blog - POC" />
+					</a>
+					<div class="fr h2 pv2 tr">
+						<a class="link f5 ml2 dim near-white" href="/archives/">Archives</a>
+						<a class="link f5 ml2 dim near-white" href="/slides/">Slides</a>
+						<a class="link f5 ml2 dim near-white" href="/talks/">Talks</a>
+						<a class="link f5 ml2 dim near-white" href="https://github.com/thinkwrap"><i class="fab fa-github-square"></i></a>
+						<a class="link f5 ml2 dim near-white fas fa-rss-square" href="https://blog.pivotree.cloud/index.xml" title="RSS Feed"></a>
+						<a class="link f5 ml2 dim near-white fas fa-search" href="https://blog.pivotree.cloud/search/" role="search" title="Search"></a>
+					</div>
+				</nav>
+
+				<div id="hdr" class="tc-l pv4-ns pv5-l pv2 ph3 ph4-ns">
+					<h1 class="near-white mt1-ns f2 fw3 mb0 mt0 lh-title">How to mirror Github and Bitbucket repositories</h1>
+					<h2 class="near-white mt3-l mb4-l fw1 f6 f3-l measure-wide-l center lh-copy mt2 mb3">
+						
+						
+							
+								Published
+								<time datetime="2021-02-17T13:00:00&#43;08:00">Feb 17, 2021</time>
+								<span class="display-print">by Miro Adamy</span>
+								 in <a href="https://blog.pivotree.cloud/categories/devops" class="no-underline category near-white dim">DevOps</a>, <a href="https://blog.pivotree.cloud/categories/version-control" class="no-underline category near-white dim">Version Control</a>, <a href="https://blog.pivotree.cloud/categories/howto" class="no-underline category near-white dim">HowTo</a>
+								<span class="display-print">at https://blog.pivotree.cloud/2021-02-17-mirroring-repos/</span>
+							
+						
+					</h2>
+				</div>
+
+				
+				
+				
+				
+
+			</div>
+		</header>
+		
+		<main role="main">
+		
+<article class="center bg-white br-3 pv1 ph4 lh-copy f5 nested-links mw7">
+	<h1 id="mirroring-large-number-of-github-or-bitbucket-repositories">Mirroring large number of GitHub or Bitbucket repositories</h1>
+<p><strong>Use case</strong>:</p>
+<p>I want to create local clone of a large number of repositories from an organization in GitHub / Bitbucket.</p>
+<h2 id="assumptions">Assumptions</h2>
+<ul>
+<li>user has SSH key registered with the GH / BB - can clone using ssh protocol</li>
+<li>user has successfully cloned at least one repo from command line before (the /etc/hosts contains host entries for BB and GH)</li>
+<li>user has modern version of Python 3 installed (3.6 or better)</li>
+<li>user has local installation of a reasonably modern Git</li>
+</ul>
+<h2 id="steps">Steps</h2>
+<p>First I use the <code>./bb-repo-links.sh</code> and <code>./gh-repo-links.sh</code> to generate list of repositories.
+See these blog articles: <a href="/2021-02-15-bitbucket-list-repos/">How to list repositories in Bitbucket</a> and <a href="/2021-02-16-github-list-repos/">How to list repositories in github</a></p>
+<p>These are text files and have the structure like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">EXFO|git@bitbucket.org:thinkwrap/exfo-tw-docker-jenkins.git
+FARO|git@bitbucket.org:thinkwrap/faro-infrastructure.git
+H3|git@bitbucket.org:thinkwrap/headless-api-gateway.git
+H3|git@bitbucket.org:thinkwrap/headless-cart-service.git
+H3|git@bitbucket.org:thinkwrap/headless-catalog-service.git
+H3|git@bitbucket.org:thinkwrap/headless-connector-atg.git
+H3|git@bitbucket.org:thinkwrap/headless-connector-contentful.git
+</code></pre></div><p>The first field is the project prefix, and the second is the SSH url for cloning the repository.  They are separated by the | character.</p>
+<p>Cloning is trivial:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">python3 ./process_repos.py NAME-OF-THE-CONTROL-FILE ....
+
+</code></pre></div><p>e.g.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">python3 ./process_repos.py pivotree_h3.bb-repo2 pvtrlabs.gh-repo 
+</code></pre></div><p>The Python script uses <code>../MIRROR</code> as the starting point for the mirrored tree.</p>
+<p>This can be changed by exporting the variable <code>MIRROR_ROOT</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">export MIRROR_ROOT <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;../MIRROR2&#39;</span>
+</code></pre></div><p>The generated structure looks like this:</p>
+<p><code>PLAFORM &gt; ACCOUNT &gt; PROJECT &gt; REPO</code></p>
+<p>where:</p>
+<ul>
+<li>PLATFORM is <code>bitbucket.org</code> or <code>github.com</code></li>
+<li>Account is organization name within the platform</li>
+<li>PROJECT is project name for Bitbucket, defaults to &lsquo;src&rsquo; for GitHub</li>
+<li>REPO is the repository name</li>
+</ul>
+<p>NOTE: the names of some projects are &lt; edited &gt;.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">.
+├── bitbucket.org
+│   ├── pivotree_h3
+│   │   ├── BrownBagExamples
+│   │   │   └── apigateway
+│   │   ├── DATA
+│   │   │   └── sample-data-aws
+│   │   ├── DIVE
+│   │   │   ├── customer-mgmt-api
+│   │   │   ├── data-science-practice
+...
+│   │   │   ├── pvt-admin-mgmt-api
+│   │   │   └── sagemaker-microservices
+│   │   ├── DIVE20
+│   │   │   ├── dive-data-manager
+...
+│   │   │   └── tr-sgm-duplicates-svc
+│   │   ├── DIVECX
+│   │   │   ├── dive-cx-account
+│   │   │   ├── dive-cx-account-fork
+...
+│   │   │   └── pvt-ssm-manager
+│   │   └── starter
+│   │       ├── pvt-node-module-starter
+│   │       ├── pvt-node-starter
+│   │       ├── pvt-pipeline-example
+│   │       └── pvt-sls-starter
+│   └── thinkwrap
+│       ├── &lt;PRJ&gt;-CLOUD
+│       │   └── &lt;prj&gt;-cloud
+│       ├── Admin
+│       │   └── tw-bitbucket-admin
+│       ├── &lt;PROJECT_1&gt;
+│       │   ├── &lt;prj1&gt;-infra
+│       │   └── &lt;prj1&gt;-robot
+│       ├── BOPIS
+│       │   ├── bopis_automation_platform
+│       │   └── pvt-bopis
+│       ├── &lt;PRJ2&gt;
+│       │   └── &lt;prj2&gt;-vtex-poc
+│       ├── &lt;PRJ3&gt;
+...
+│       │   └── &lt;prj4&gt;-testautomation
+│       ├── ZZZ-Archived-Repos
+│       │   └── oneclick-starter
+│       └── microbase
+│           ├── micro-alexa-search
+│           ├── micro-alexa-search-skill
+│           ├── micro-backoffice
+│           ├── micro-cart-service
+│           ├── micro-catalog-service
+│           ├── micro-customer-service
+│           ├── micro-docker-nginx
+│           ├── micro-docker-service
+│           ├── micro-oauth-service
+│           ├── micro-payment-service
+│           ├── micro-promotion-service
+│           ├── micro-recommendation-service
+│           ├── micro-stock-service
+│           ├── micro-tax-service
+│           ├── microbase
+│           └── www.microbase.io
+└── github.com
+    ├── pivotree-tech-blog
+    │   └── src
+    │       ├── hugo101
+    │       ├── pivotree-tech-blog-source-poc
+    │       ├── pivotree-tech-blog.github.io
+    │       └── story
+    ├── pvtrlabs
+    │   └── src
+    │       ├── action-skip-ci
+    │       ├── at-aws-onelogin-multiapp
+    │       ├── at-cloudhealth
+    │       ├── at-opsgenie-integrations
+....    
+    │       ├── terraform-tfe-workspace
+    │       ├── terraform-tfe-workspace-full
+    │       ├── test-limited-tfc-access
+    │       └── test-repo
+    └── thinkwrap
+        └── src
+            ├── ML-Live-Beginner
+            ├── ML-Live-Intermediate
+            ├── Tiny-Python-3.6-Notebook
+            ├── aaac-starter-template
+            ├── aws-cost-and-usage-report
+            ├── aws-ml-guide
+            ├── blast-radius
+            ├── docker-aws-cli
+            ├── docker-kubernetes-cli
+            ├── docker-kubernetes-cli-helm
+            ├── docker-node-base-pipelines
+            ├── docker-node-sls-pipelines
+            ├── docker-node-sls-pipelines-aws
+            ├── docker-python-base-pipelines
+            ├── docker-sls-cli
+            ├── docker-terraform-cli
+            ├── docker-terraform-cli-helm
+            ├── ecs-deep-dive-2018
+            ├── kubernetes-in-action
+            ├── programming-with-data
+            ├── sgviz
+            ├── ssm-parameter-store
+            ├── terraform-ecs-fargate
+            └── universal-recommender
+
+549 directories, 0 files
+
+</code></pre></div><h2 id="updating">Updating</h2>
+<p>If the Python script encounters an existing repository, it tries to do an update by fetching the remote updates. It does NOT merge.</p>
+
+</article>
+
+		</main>
+		
+				<div class="hide-print sans-serif f6 f5-l mt5 ph3 pb6 center nested-copy-line-height lh-copy nested-links mw-100 measure-wide">
+		<div class="about-the-author">
+		
+			
+			
+				
+					<p><img src="/img/miro.adamy.jpg" alt="Miro"></p>
+<p>Miro Adamy is a DevOps/Cloud engineer, working for <a href="https://pivotree.com">Pivotree</a> on designing and creating cloud systems infrastructure. He enjoys reading books, surfing Web, walking, thinking and occasionally writing on various topics here and <a href="https://www.miroadamy.com">elsewhere</a></p>
+
+				
+			
+		
+		</div>
+		
+	</div>
+
+		
+		
+		
+		<footer class="hide-print sans-serif f6 fw1 bg-black near-white bottom-0 w-100 pa3" role="contentinfo">
+			<p class="w-50 fr tr">
+			<a class="no-underline near-white" href="https://github.com/xaprb/story"><img class="dib" title="Made with Hugo and Story" alt="Story logo" src="https://blog.pivotree.cloud/img/story-logo-white.svg" style="width: 1.5rem; height: 1.5rem" /></a>
+			</p>
+			<p class="w-50 near-white">
+				&copy; 2021 Pivotree Team
+			</p>
+		</footer>
+		
+	
+	
+	</body>
+</html>

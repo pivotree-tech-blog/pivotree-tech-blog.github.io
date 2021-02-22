@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>IaaC on Pivotree Cloud Technology Blog - POC</title>
+    <link>https://blog.pivotree.cloud/tags/iaac/</link>
+    <description>Recent content in IaaC on Pivotree Cloud Technology Blog - POC</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 10 Aug 2020 13:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.pivotree.cloud/tags/iaac/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Reference Architecture as a Code</title>
+      <link>https://blog.pivotree.cloud/2020-08-07-architecture-as-a-code/</link>
+      <pubDate>Mon, 10 Aug 2020 13:00:00 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/2020-08-07-architecture-as-a-code/</guid>
+      <description>Many shapes of Architecture According to the wise people, an architecture is the shared understanding that the expert developers/system builders/maintainers have of the system design. It&amp;rsquo;s purpose is to maximize the probability that the decisions you have to make early in a project are the right ones. It is sort of a blueprint for the future system and captures parts, relations, boundaries, constraints.
+In our business (we build and run environments and solutions for eCommerce, data management and other business activities of our customers), an important subtype of architecture is Reference Architecture.</description>
+    </item>
+    
+    <item>
+      <title>Building an ATG autoscaling solution</title>
+      <link>https://blog.pivotree.cloud/2020-07-01-oc-autoscaling/</link>
+      <pubDate>Fri, 10 Jul 2020 13:00:00 +0800</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/2020-07-01-oc-autoscaling/</guid>
+      <description>The Challenge Pivotree had a client who wanted to autoscale ATG application servers under certain conditions. The challenge was that previously servers were provisioned and built up based on requirements and were static. Server configurations were baked into the ear and called using jvm args. Any platform integration was all done manually and it could take several days to weeks to complete a build out.
+The client had been previously migrated to AWS cloud but at the time it was a basic lift and shift with the environment deployed using terraform and then built and managed manually.</description>
+    </item>
+    
+  </channel>
+</rss>

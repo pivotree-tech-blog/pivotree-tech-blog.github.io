@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Building an ATG autoscaling solution</title>
+		<link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.pivotree.cloud/index.xml">
+		<link rel="canonical" href="https://blog.pivotree.cloud/2020-07-01-oc-autoscaling/">
+		
+		<link rel="shortcut icon" type="image/png" href="https://blog.pivotree.cloud/apple-touch-icon-precomposed.png">
+		<meta name="description" content="Developing an autoscaling solution for ATG">
+		
+		<meta name="generator" content="Hugo 0.68.3" />
+
+		
+		<meta property="og:title" content="Building an ATG autoscaling solution" />
+		<meta property="og:type" content="article" />
+		<meta property="og:image" content="https://blog.pivotree.cloud/img/unsplash-photos-nehfi_SfqtU.jpg" />
+		<meta property="og:description" content="Developing an autoscaling solution for ATG" />
+		<meta property="og:url" content="https://blog.pivotree.cloud/2020-07-01-oc-autoscaling/" />
+		<meta property="og:site_name" content="Building an ATG autoscaling solution" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@TeamPivotree" />
+
+
+		
+		<link rel="stylesheet" href="https://blog.pivotree.cloud/css/tachyons.min.css" />
+		<link rel="stylesheet" href="https://blog.pivotree.cloud/css/story.css" />
+		<link rel="stylesheet" href="https://blog.pivotree.cloud/css/descartes.css" />
+		
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+		<link href="https://fonts.googleapis.com/css?family=Quattrocento+Sans:400,400i,700,700i|Quattrocento:400,700|Spectral:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
+		
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		
+		<script src="https://blog.pivotree.cloud/js/story.js"></script>
+
+	</head>
+	<body class="ma0 bg-white  page-kind-page is-page-true ">
+		
+		<header class="cover bg-top" style="background-image: url('https://blog.pivotree.cloud/img/unsplash-photos-nehfi_SfqtU.jpg'); background-position: center;">
+			<div class="bg-black-30 bb bt">
+
+				<nav class="hide-print sans-serif  border-box pa3 ph5-l">
+					<a href="https://blog.pivotree.cloud/" title="Home">
+						<img src="https://blog.pivotree.cloud/img/logo.jpg" class="w2 h2 br-100" alt="Pivotree Cloud Technology Blog - POC" />
+					</a>
+					<div class="fr h2 pv2 tr">
+						<a class="link f5 ml2 dim near-white" href="/archives/">Archives</a>
+						<a class="link f5 ml2 dim near-white" href="/slides/">Slides</a>
+						<a class="link f5 ml2 dim near-white" href="/talks/">Talks</a>
+						<a class="link f5 ml2 dim near-white" href="https://github.com/thinkwrap"><i class="fab fa-github-square"></i></a>
+						<a class="link f5 ml2 dim near-white fas fa-rss-square" href="https://blog.pivotree.cloud/index.xml" title="RSS Feed"></a>
+						<a class="link f5 ml2 dim near-white fas fa-search" href="https://blog.pivotree.cloud/search/" role="search" title="Search"></a>
+					</div>
+				</nav>
+
+				<div id="hdr" class="tc-l pv4-ns pv5-l pv2 ph3 ph4-ns">
+					<h1 class="near-white mt1-ns f2 fw3 mb0 mt0 lh-title">Building an ATG autoscaling solution</h1>
+					<h2 class="near-white mt3-l mb4-l fw1 f6 f3-l measure-wide-l center lh-copy mt2 mb3">
+						
+						
+							
+								Published
+								<time datetime="2020-07-10T13:00:00&#43;08:00">Jul 10, 2020</time>
+								<span class="display-print">by Daniel Mulrooney</span>
+								 in <a href="https://blog.pivotree.cloud/categories/oracle-commerce" class="no-underline category near-white dim">Oracle Commerce</a>
+								<span class="display-print">at https://blog.pivotree.cloud/2020-07-01-oc-autoscaling/</span>
+							
+						
+					</h2>
+				</div>
+
+				
+				
+				
+				
+
+			</div>
+		</header>
+		
+		<main role="main">
+		
+<article class="center bg-white br-3 pv1 ph4 lh-copy f5 nested-links mw7">
+	<h2 id="the-challenge">The Challenge</h2>
+<p>Pivotree had a client who wanted to autoscale ATG application servers under certain conditions. The challenge was that previously servers were provisioned and built up based on requirements and were static. Server configurations were baked into the ear and called using jvm args. Any platform integration was all done manually and it could take several days to weeks to complete a build out.</p>
+<p>The client had been previously migrated to AWS cloud but at the time it was a basic lift and shift with the environment deployed using terraform and then built and managed manually. Common patterns/tooling/processes from the datacenter were also migrated over. This was based on the clients requirements at the time.</p>
+<p>The ATG application consists of several layers. The client facing application servers commonly referred to as page or com servers, the content management system called BCC which typically is configured manually to register the various application servers and publish/update content as required and endeca search engine which also requires manually updating various configuration files to add/remove application servers from the configuration.</p>
+<p><img src="/img/oc_autoscaling/oc_infra.jpeg" alt="Oracle Commerce "></p>
+<p>Several things had to be considered when developing this solution. How we were going to build the images, how we were going to store the runtime parameters, updating the various configuration files, starting the application and registering the application servers with BCC and Endeca servers.</p>
+<p>Additional consideration around centralized logging, user access and troubleshooting were also a factor. Our SI and OP teams were used to having ssh to all boxes, finding logs on the boxes and resolving issues on the boxes. PCI requirements were also a factor as we needed to be sure we were developing a solution we could certify at a later date.</p>
+<h2 id="on-building-immutable-infrastructure">On Building Immutable Infrastructure</h2>
+<p>After a careful analysis of the software stack and previous knowledge working with the platform it was decided we would need to create  immutable images.  Using an immutable image meant we could use the same image across environments as well as potentially re-use this solution in the future with additional clients. We were already working with Hashicorp Packer in other parts of the organization and it was a natural fit for what we planned on building.</p>
+<p>During development of the  solution we also decided that we would leverage AWS System Manager Parameter Store to hold all the runtime values required. We developed a hierarchy that we could use to ensure each environment&rsquo;s values were separated based on the hierarchical path. As part of this a process was developed to update a “property” file that was then parsed and pushed into SSM.</p>
+<p>Due to the size of some of the software we install and the need for autoscaling to occur rapidly another key decision was separating building of images and loading of runtime values. Working with Packer we built 2 machine images. One for the application stack based on Java and Jboss 7.2, the other for Endeca based on Endeca 11.3.2. We also started developing various scripts to populate our configuration and startup files.</p>
+<p>We determined early in the process that we would leverage AWS resource tags to determine what environment we were working on as well as the role of the server. Using those tags allowed us to make decisions and build our queries to SSM. We also decided that we would have 1 download.sh script in our user folder which would be called via cloud-init and would then query tags and download the appropriate automation package from an S3 bucket we had. This gave us the flexibility to update those scripts/templates without requiring a new image.</p>
+<p>Both images required mounting of efs volumes so we developed a script to query SSM for the EFS endpoints, update our template and then append the file to fstab and remount everything. The endeca image was fairly basic with a few installations completed using silent install options and required scripts copied into the home folder.</p>
+<p>Once we had completed the Endeca image the next step was to figure out every value we edit in the jboss configuration files and start replacing those with a token. We also developed a script that would query SSM for that required value and then replace the token with the updated value. This allowed for different configurations such as datasource URL, datasource username or passwords to be unique across env as it would get loaded at runtime.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">
+<span style="color:#75715e">#####</span>
+<span style="color:#75715e">##### Query SSM and assign to variables</span>
+<span style="color:#75715e">#####</span>
+
+rds_url<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>aws ssm --region <span style="color:#66d9ef">$(</span>curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone | sed -e <span style="color:#e6db74">&#34;s/.</span>$<span style="color:#e6db74">//&#34;</span><span style="color:#66d9ef">)</span>  <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>get-parameters --names /$env/rds/rds_url --query <span style="color:#e6db74">&#34;Parameters[*].{Value:Value}&#34;</span> | grep Value | cut -d<span style="color:#e6db74">&#39;&#34;&#39;</span> -f4<span style="color:#66d9ef">)</span>
+
+rds2_url<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>aws ssm --region <span style="color:#66d9ef">$(</span>curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone | sed -e <span style="color:#e6db74">&#34;s/.</span>$<span style="color:#e6db74">//&#34;</span><span style="color:#66d9ef">)</span>  <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>get-parameters --names /$env/rds/rds2_url --query <span style="color:#e6db74">&#34;Parameters[*].{Value:Value}&#34;</span> | grep Value | cut -d<span style="color:#e6db74">&#39;&#34;&#39;</span> -f4<span style="color:#66d9ef">)</span>
+
+
+rds_db_name<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>aws ssm --region <span style="color:#66d9ef">$(</span>curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone | sed -e <span style="color:#e6db74">&#34;s/.</span>$<span style="color:#e6db74">//&#34;</span><span style="color:#66d9ef">)</span>  <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>get-parameters --names rds_db_name --query <span style="color:#e6db74">&#34;Parameters[*].{Value:Value}&#34;</span> | grep Value | cut -d<span style="color:#e6db74">&#39;&#34;&#39;</span> -f4<span style="color:#66d9ef">)</span>
+
+rds_core_username<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>aws ssm --region <span style="color:#66d9ef">$(</span>curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone | sed -e <span style="color:#e6db74">&#34;s/.</span>$<span style="color:#e6db74">//&#34;</span><span style="color:#66d9ef">)</span>  <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>get-parameters --names /$env/core/username --query <span style="color:#e6db74">&#34;Parameters[*].{Value:Value}&#34;</span> | grep Value | cut -d<span style="color:#e6db74">&#39;&#34;&#39;</span> -f4<span style="color:#66d9ef">)</span>
+
+rds_core_password<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>aws ssm --region <span style="color:#66d9ef">$(</span>curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone | sed -e <span style="color:#e6db74">&#34;s/.</span>$<span style="color:#e6db74">//&#34;</span><span style="color:#66d9ef">)</span>  <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>get-parameters --names /$env/core/password --with-decryption --query <span style="color:#e6db74">&#34;Parameters[*].{Value:Value}&#34;</span> | grep Value | cut -d<span style="color:#e6db74">&#39;&#34;&#39;</span> -f4<span style="color:#66d9ef">)</span>
+
+<span style="color:#75715e">#####</span>
+<span style="color:#75715e">##### Replace tokens with assigned variables</span>
+<span style="color:#75715e">#####</span>
+
+sed -i <span style="color:#e6db74">&#34;s/rds_url/</span>$rds_url<span style="color:#e6db74">/g&#34;</span> /home/centos/automation/standalone.xml
+
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -z $rds2_url <span style="color:#f92672">]</span>
+<span style="color:#66d9ef">then</span>
+ sed -i <span style="color:#e6db74">&#34;s/rds2_url/</span>$rds2_url<span style="color:#e6db74">/g&#34;</span> /home/centos/automation/standalone.xml
+<span style="color:#66d9ef">else</span>
+ sed -i <span style="color:#e6db74">&#34;s/rds2_url/</span>$rds_url<span style="color:#e6db74">/g&#34;</span> /home/centos/automation/standalone.xml
+<span style="color:#66d9ef">fi</span>
+
+
+sed -i <span style="color:#e6db74">&#34;s/core_username/</span>$rds_core_username<span style="color:#e6db74">/g&#34;</span> /home/centos/automation/standalone.xml
+sed -i <span style="color:#e6db74">&#34;s/core_password/</span>$rds_core_password<span style="color:#e6db74">/g&#34;</span> /home/centos/automation/standalone.xml
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Next we took a look at our startup scripts. We pass in several java arguments from JVM name, heap sizes, along with other various runtime values that can be unique depending on the role of the server or requirements. We updated the scripts with tokens and created another script to update those values and then start the application server.</p>
+<p><img src="/img/oc_autoscaling/oc_autoscaling_process.jpeg" alt="StartUp Process"></p>
+<p>Once we had a viable image that was updating the required parameters and starting Jboss successfully we then had to start looking at solving the application requirements. This included registering with the ATG BCC and Endeca.</p>
+<p>Oracle ATG had developed and promoted, as part of the Oracle  <a href="https://github.com/oracle/atg-commerce-iaas">IAAS toolset</a>, a <a href="https://github.com/oracle/atg-commerce-iaas/tree/master/BCCTools">BCC rest service</a> that when compiled into the ear would allow for external calls to register/deregister from the topology. We took that and developed a script which is called once Jboss is determined to be online and registers itself. We also developed scripts to add/remove an app server from the endeca configuration files.</p>
+<p>Once everything is up and running we register with the application load balancer for the client facing apps which are called from the web tier.</p>
+<h2 id="all-things-terraform">All Things Terraform</h2>
+<p>Pivotree uses Terraform for IaC. Most of our cloud solutions have been built using Terraform. Terraform modules are either maintained internally or are in some cases internally approved community modules. We have several reference architectures depending on the platform and solution required</p>
+<p>Using Terraform to stand up the environment was a matter of taking our reference architecture, updating it to leverage auto-scaling groups and  a few other variables in our main configuration file. This would include anything we want to customise within the environment, EFS, RDS, EC2 instances, ASGs with EC2 info etc. We also developed a module to push any required values to SSM such as EFS endpoints, RDS url and some server instances to load at runtime.</p>
+<p>One of the challenges we realised early on was how to approach the patching/scaling events due to the way AWS manages instances provisioned by autoscaling groups. Terraform has no problems updating the launch configs but doesn’t do anything with that updated config. A solution we found was to use an open source product called <a href="https://github.com/palantir/bouncer">Bouncer</a> which addresses this issue. We can call Bouncer from within Terraform and it will manage the scaling out of the ASG either in serial or canary mode. Our single instances in self healing groups are all serial while our client facing application servers are done canary to ensure it&rsquo;s always available.</p>
+<ul>
+<li>The user_data was updated to reference the download.sh file we had built into our packer images. Once we had everything prepared it was a matter of executing our Terraform plan and  approving it in Terraform Cloud.</li>
+</ul>
+<p>As part of standing it all up the ASG is configured to scale with parameters that trigger a scale out at the appropriate threshold to give the new instance time to come online before the other servers are overwhelmed. ATG does require a little more time to come online and this has to be accounted for in the scaling thresholds.</p>
+<h2 id="code-releases">Code Releases</h2>
+<p>With the infrastructure being immutable you no longer deploy applications to an instance and restart the application but rather deploy your code to an efs volume, update SSM with the path and using the AWS CLI you can execute the required changes on the ASG to launch new instances which will query SSM as part of its launch and symlink the appropriate package on the EFS volume.</p>
+<p><img src="/img/oc_autoscaling/code_release_process.jpeg" alt="Code Release Process"></p>
+<h2 id="additional-benefits">Additional Benefits</h2>
+<p>System Integrators and Operators no longer require access to the instances, all logging has been centralised within Cloudwatch. Direct ssh is no longer supported as we have enabled ec2-instance-connect and plan on migrating to AWS SSM Session Manager in the coming months. This helps address PCI requirements as well as simplifying the support experience.</p>
+<p>With this solution in place we developed a patching pipeline within Jenkins. First we built the Packer package and placed the new AMI id into SSM. We have another job that will checkout our updated Terraform source code with the AMI ID of the new image, comments and commits the code back into git. This triggers a build in Terraform which we have decided for the time being is our gate and an operator has to approve the update. Once the operator approves the change, Terraform and Bouncer will complete it.</p>
+<p><img src="/img/oc_autoscaling/ami_image_process.jpeg" alt="AMI Image Process"></p>
+<h2 id="whats-next">What’s Next?</h2>
+<p>Developing this solution we have given the client the ability to rapidly provision new environments, scale out production on a demand basis without having additional servers laying around in wait and an improved patching process that reduces the risks and ensures a consistent image.</p>
+<p>Over the next few months we hope to extend this out so we can quickly turn a client onboarding around in a matter of days vs weeks or months.   These are some of the areas we are looking at:</p>
+<ul>
+<li>
+<p>Using Oracle RDS S3 integration we are building a solution to have a data pumped DB uploaded to a known space and then imported into the RDS instance.</p>
+</li>
+<li>
+<p>Working with the system integrator and client to further integrate the EAR configuration to improve the model even further.</p>
+</li>
+</ul>
+
+</article>
+
+		</main>
+		
+				<div class="hide-print sans-serif f6 f5-l mt5 ph3 pb6 center nested-copy-line-height lh-copy nested-links mw-100 measure-wide">
+		<div class="about-the-author">
+		
+			
+			
+				
+					<p><img src="/img/Daniel_Mulrooney.jpg" alt="Daniel"></p>
+<p>Daniel Mulrooney is a Cloud Solutions Architect current working for <a href="https://pivotree.com">Pivotree</a> designing and creating cloud based system infrastructure. He is also an ultra runner having successfully completed several ultra distances races.</p>
+
+				
+			
+		
+		</div>
+		
+	</div>
+
+		
+		
+		
+		<footer class="hide-print sans-serif f6 fw1 bg-black near-white bottom-0 w-100 pa3" role="contentinfo">
+			<p class="w-50 fr tr">
+			<a class="no-underline near-white" href="https://github.com/xaprb/story"><img class="dib" title="Made with Hugo and Story" alt="Story logo" src="https://blog.pivotree.cloud/img/story-logo-white.svg" style="width: 1.5rem; height: 1.5rem" /></a>
+			</p>
+			<p class="w-50 near-white">
+				&copy; 2021 Pivotree Team
+			</p>
+		</footer>
+		
+	
+	
+	</body>
+</html>

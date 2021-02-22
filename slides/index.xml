@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Slides on Pivotree Cloud Technology Blog - POC</title>
+    <link>https://blog.pivotree.cloud/slides/</link>
+    <description>Recent content in Slides on Pivotree Cloud Technology Blog - POC</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 01 May 2020 09:50:00 -0700</lastBuildDate>
+    
+	<atom:link href="https://blog.pivotree.cloud/slides/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Slides - template </title>
+      <link>https://blog.pivotree.cloud/slides/placeholder/</link>
+      <pubDate>Fri, 01 May 2020 09:50:00 -0700</pubDate>
+      
+      <guid>https://blog.pivotree.cloud/slides/placeholder/</guid>
+      <description>Coming soon &amp;hellip;</description>
+    </item>
+    
+  </channel>
+</rss>

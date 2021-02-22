@@ -1,0 +1,17 @@
+@startuml
+!include <awslib/AWSCommon>
+!include <awslib/AWSSimplified.puml>
+!include <awslib/Compute/all.puml>
+!include <awslib/mobile/all.puml>
+!include <awslib/general/all.puml>
+!include <awslib/GroupIcons/all.puml>
+!include <awslib/Storage/all.puml>
+!include <awslib/ManagementAndGovernance/all.puml>
+!include <awslib/CustomerEngagement/all.puml>
+!include <awslib/MachineLearning/all.puml>
+!include <awslib/NetworkingAndContentDelivery/all.puml>
+!include <awslib/Database/all.puml>
+!include <awslib/ApplicationIntegration/all.puml>
+
+listsprites
+@enduml
